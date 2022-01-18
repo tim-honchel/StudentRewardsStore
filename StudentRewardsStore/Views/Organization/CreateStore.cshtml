@@ -1,0 +1,28 @@
+﻿@model Organization
+<h2>Create a New Store</h2>
+@using (Html.BeginForm("SaveNewStore", "Organization", "Post"))
+{
+    <br>
+    <input asp-for="ID" type="hidden" value="" />
+    <label asp-for="Name" class="control-label">Name of Store</label>
+    <p><em>This is what students will see at the top of the web page.</em></p>
+    <input type="text" name="Name" class="form-control" value="" />
+    <br>
+    <label asp-for="StoreURL" class="control-label">Store URL</label>
+    <p><em>www.studentrewardsstore.com/yourcustomurlhere</em></p>
+    <input type="text" name="StoreURL" class="form-control" />
+    <br>
+    <label asp-for="CurrencyName" class="control-label">Name of Store Currency</label>
+    <p><em>Prices will be in your own pseudo-currency.</em></p>
+    <input type="text" name="CurrencyName" class="form-control" />
+    <br>
+    <label asp-for="Email" class="control-label">Email Address</label>
+    <p><em>For admin login.</em></p>
+    <input type="text" name="Email" class="form-control" />
+    <br>
+    <label asp-for="Email" class="control-label">Password</label>
+    <p><em>For admin login.</em></p>
+    <input type="text" name="Email" class="form-control" />
+    <br>
+    <input type="submit" value="Create Store" class="btn btn-primary" />
+}
