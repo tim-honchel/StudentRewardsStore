@@ -33,6 +33,7 @@ namespace StudentRewardsStore
             });
 
             services.AddTransient<IOrganizationsRepository, OrganizationsRepository>();
+            services.AddTransient<IAdminsRepository, AdminsRepository>();
 
             services.AddControllersWithViews();
         }

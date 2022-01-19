@@ -1,0 +1,13 @@
+﻿@model Admin
+
+<h2>Enter Your Password</h2>
+<p>@Model.Email</p>
+
+@using (Html.BeginForm("CheckPassword", "Admin", "Post"))
+{
+    <br>
+    <label asp-for="Password" class="control-label">Password</label>
+    <input type="text" name="Password" class="form-control" />
+    <br>
+    <input type="submit" value="Log In" class="btn btn-primary" />
+}

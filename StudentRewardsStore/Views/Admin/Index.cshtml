@@ -1,0 +1,12 @@
+﻿@model Admin
+<h2>Log In</h2>
+@using (Html.BeginForm("LoginAdmin", "Admin", "Post"))
+{
+    <br>
+    <label asp-for="Email" class="control-label">Email</label>
+    <input type="text" name="Email" class="form-control" value="" />
+    <br>
+    <input type="submit" value="Log In" class="btn btn-primary" />
+    <br>
+    <a asp-area="" asp-controller="Admin" asp-action="Register">Register for a new account</a>
+}

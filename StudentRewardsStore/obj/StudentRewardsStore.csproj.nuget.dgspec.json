@@ -47,6 +47,10 @@
             "MySql.Data": {
               "target": "Package",
               "version": "[8.0.27, )"
+            },
+            "XAct.Core.PCL": {
+              "target": "Package",
+              "version": "[0.0.5014, )"
             }
           },
           "imports": [
