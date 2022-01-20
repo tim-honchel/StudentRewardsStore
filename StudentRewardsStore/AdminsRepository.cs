@@ -21,14 +21,12 @@ namespace StudentRewardsStore
             newAdmin.Password = encryption(newAdmin.Unhashed);
             _conn.Execute("INSERT INTO admins (ID, Email, Password) VALUES (@ID, @Email, @Password);", new { ID = newAdmin.ID, Email = newAdmin.Email, Password = newAdmin.Password });
         }
-        public Admin LoginAdmin(string email)
-        {   
-                return _conn.QuerySingle<Admin>("SELECT Email FROM admins WHERE Email = @Email;", new { Email = email });  
-        }
-        public void CheckPassword(string unhashed)
+        public Admin LoginAdmin(string email, string unhashed)
         {
-            
+           string password = encryption(unhashed);
+           return _conn.QuerySingle<Admin>("SELECT * FROM admins WHERE Email = @Email AND Password = @Password;", new { Email = email, Password = password });  
         }
+        
         public string encryption(string unhashed)
         {
             MD5CryptoServiceProvider md5 = new MD5CryptoServiceProvider();

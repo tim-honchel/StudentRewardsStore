@@ -26,37 +26,31 @@ namespace StudentRewardsStore.Controllers
         {
             return View();
         }
-        public IActionResult LoginAdmin(string email)
+        public IActionResult LoginAdmin(string email, string unhashed)
         {
             try
             {
-                var user = repo.LoginAdmin(email);
+                var user = repo.LoginAdmin(email, unhashed);
                 return View(user);
             }
             catch (Exception)
             {
-                return RedirectToAction("NotFound");
+                return RedirectToAction("InvalidCredentials");
             }
         }
 
-        public IActionResult CheckPassword(string unhashed)
-        {
-            
-            return RedirectToAction("WrongPassword");
-        }
+        
         public IActionResult RegisterAdmin(Admin admin)
         {
             repo.RegisterAdmin(admin);
             return RedirectToAction("Index");
         }
-        public IActionResult NotFound()
+        public IActionResult InvalidCredentials()
         {
             return View();
         }
-        public IActionResult WrongPassword()
-        {
-            return View();
-        }
+        
+        
     }
 }
 

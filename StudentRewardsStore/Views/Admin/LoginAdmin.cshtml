@@ -1,13 +1,19 @@
 ﻿@model Admin
 
-<h2>Enter Your Password</h2>
+<h2>Admin Overview</h2>
 <p>@Model.Email</p>
+<p>Login successful!</p>
 
-@using (Html.BeginForm("CheckPassword", "Admin", "Post"))
-{
-    <br>
-    <label asp-for="Password" class="control-label">Password</label>
-    <input type="text" name="Password" class="form-control" />
-    <br>
-    <input type="submit" value="Log In" class="btn btn-primary" />
-}
+<table class="table">
+    <tr>
+        <th>ID</th>
+        <th>Email</th>
+    </tr>
+    <tr>
+        <td>@Model.ID</td>
+        <td>@Model.Email</td>
+    </tr>
+
+</table>
+
+
