@@ -39,7 +39,20 @@ namespace StudentRewardsStore.Controllers
             }
         }
 
-        
+        public IActionResult LoginComplex(string email, string unhashed)
+        {
+            try
+            {
+                var stores = repo.LoginComplex(email, unhashed);
+                return View(stores);
+            }
+            catch (Exception)
+            {
+                return RedirectToAction("InvalidCredentials");
+            }
+        }
+
+
         public IActionResult RegisterAdmin(Admin admin)
         {
             repo.RegisterAdmin(admin);

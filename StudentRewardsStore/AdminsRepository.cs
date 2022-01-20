@@ -26,7 +26,12 @@ namespace StudentRewardsStore
            string password = encryption(unhashed);
            return _conn.QuerySingle<Admin>("SELECT * FROM admins WHERE Email = @Email AND Password = @Password;", new { Email = email, Password = password });  
         }
-        
+        public IEnumerable<Organization> LoginComplex(string email, string unhashed)
+        {
+            string password = encryption(unhashed);
+            //return _conn.Query<Organization>("SELECT * FROM organizations LEFT JOIN admins ON organizations.AdminID = admins.ID WHERE organizations.Email = @Email AND organizations.Password = @Password;", new { Email = email, Password = password });
+            return _conn.Query<Organization>("SELECT * FROM organizations");
+        }
         public string encryption(string unhashed)
         {
             MD5CryptoServiceProvider md5 = new MD5CryptoServiceProvider();

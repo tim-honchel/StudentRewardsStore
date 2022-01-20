@@ -1,4 +1,5 @@
 ﻿using StudentRewardsStore.Models;
+using System.Collections.Generic;
 
 namespace StudentRewardsStore
 {
@@ -6,6 +7,7 @@ namespace StudentRewardsStore
     {
         public void RegisterAdmin(Admin admin);
         public Admin LoginAdmin(string email, string unhashed);
+        public IEnumerable<Organization> LoginComplex(string email, string unhashed);
         public string encryption(string unhashed);
 
     }

@@ -1,6 +1,7 @@
 ﻿@model Admin
 <h2>Log In</h2>
-@using (Html.BeginForm("LoginAdmin", "Admin", "Post"))
+@*@using (Html.BeginForm("LoginAdmin", "Admin", "Post"))*@
+@using (Html.BeginForm("LoginComplex", "Admin", "Post"))
 {
     <br>
     <label asp-for="Email" class="control-label">Email</label>

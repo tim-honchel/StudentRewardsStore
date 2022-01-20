@@ -15,6 +15,7 @@
         public string OpenDay { get; set; }
         public int OpenTime { get; set; }
         public int WeeklyLimit { get; set; }
+        public int AdminID { get; set; }
 
 
     }
