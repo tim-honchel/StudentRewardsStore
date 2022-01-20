@@ -6,8 +6,9 @@ namespace StudentRewardsStore
     public interface IAdminsRepository
     {
         public void RegisterAdmin(Admin admin);
-        public Admin LoginAdmin(string email, string unhashed);
-        public IEnumerable<Organization> LoginComplex(string email, string unhashed);
+        public IEnumerable<Organization> ListStores(int adminID);
+        public Admin CheckPassword(string email, string unhashed);
+        public Admin GetAdminID(string email);
         public string encryption(string unhashed);
 
     }

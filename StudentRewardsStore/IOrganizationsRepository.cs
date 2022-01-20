@@ -4,6 +4,8 @@ namespace StudentRewardsStore
 {
     public interface IOrganizationsRepository
     {
+        public Organization OpenStore(int id);
         public void SaveNewStore(Organization organization);
+        public Organization RefreshStore(Organization newStore);
     }
 }

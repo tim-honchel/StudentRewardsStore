@@ -1,0 +1,35 @@
+﻿@model Organization
+
+@*Displays store settings with links to various actions*@
+
+<h2>@Model.Name Dashboard</h2>
+<p>Welcome</p>
+
+<h6>Store Info</h6>
+<p>URL: @Model.StoreURL</p>
+<p>Currency: @Model.CurrencyName</p>
+<p>Status: @Model.StoreStatus</p>
+<p>AutoSchedule: @Model.AutoSchedule</p>
+<a>Edit Store Settings</a>
+<br>
+<br>
+<h6>Students</h6>
+<a>View/Modify/Add Students</a>
+<br>
+<br>
+<h6>Prizes</h6>
+<a>View/Modify/Add Prizes</a>
+<br>
+<br>
+<h6>Orders</h6>
+<a>View Orders</a>
+<br>
+<br>
+<h6>Deposits</h6>
+<a>View/Modify/Add Deposits</a>
+<br>
+<br>
+
+@{
+        TempData["authenticateOrganizationID"] = Model.OrganizationID; // saves store ID for future authentication
+}

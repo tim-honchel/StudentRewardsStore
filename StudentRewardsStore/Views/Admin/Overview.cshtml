@@ -1,0 +1,23 @@
+﻿@model IEnumerable<Organization>
+<h2>Login Successful</h2>
+<p>Select your store:</p>
+
+
+<table class="table">
+    <tr>
+        <th>Store Name</th>
+    </tr>
+
+    @foreach (var organization in Model) // displays each store that the admin owns, with a link to that store
+    {
+        <tr>
+            <td><a href="/Organization/Index/@organization.OrganizationID">@organization.Name</a></td> 
+        </tr>
+    }
+
+</table>
+<a asp-area="" asp-controller="Organization" asp-action="CreateStore">Create a New Store</a>
+
+@{
+        TempData["authenticateAdminID"] = ViewBag.Message; // saves admin ID for future authentication
+}

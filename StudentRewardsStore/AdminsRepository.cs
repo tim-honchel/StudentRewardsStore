@@ -19,19 +19,20 @@ namespace StudentRewardsStore
         public void RegisterAdmin(Admin newAdmin)
         {
             newAdmin.Password = encryption(newAdmin.Unhashed);
-            _conn.Execute("INSERT INTO admins (ID, Email, Password) VALUES (@ID, @Email, @Password);", new { ID = newAdmin.ID, Email = newAdmin.Email, Password = newAdmin.Password });
+            _conn.Execute("INSERT INTO admins (AdminID, Email, Password) VALUES (@AdminID, @Email, @Password);", new { AdminID = newAdmin.AdminID, Email = newAdmin.Email, Password = newAdmin.Password });
         }
-        public Admin LoginAdmin(string email, string unhashed)
+        
+        public IEnumerable<Organization> ListStores(int adminID)
         {
-           string password = encryption(unhashed);
-           return _conn.QuerySingle<Admin>("SELECT * FROM admins WHERE Email = @Email AND Password = @Password;", new { Email = email, Password = password });  
+            return _conn.Query<Organization>("SELECT * FROM organizations LEFT JOIN admins ON organizations._AdminID = admins.AdminID WHERE organizations._AdminID = @AdminID;", new { AdminID = adminID });
         }
-        public IEnumerable<Organization> LoginComplex(string email, string unhashed)
+        public Admin CheckPassword(string email, string unhashed)
         {
             string password = encryption(unhashed);
-            //return _conn.Query<Organization>("SELECT * FROM organizations LEFT JOIN admins ON organizations.AdminID = admins.ID WHERE organizations.Email = @Email AND organizations.Password = @Password;", new { Email = email, Password = password });
-            return _conn.Query<Organization>("SELECT * FROM organizations");
+            return _conn.QuerySingle<Admin>("SELECT * FROM admins WHERE Email = @Email AND Password = @Password;", new { Email = email, Password = password });
         }
+        
+        
         public string encryption(string unhashed)
         {
             MD5CryptoServiceProvider md5 = new MD5CryptoServiceProvider();
@@ -46,6 +47,10 @@ namespace StudentRewardsStore
                 encryptdata.Append(encrypt[i].ToString());
             }
             return encryptdata.ToString();
+        }
+        public Admin GetAdminID(string email)
+        {
+            return _conn.QuerySingle<Admin>("SELECT * FROM admins WHERE Email = @Email;", new { Email = email});
         }
     }
 }

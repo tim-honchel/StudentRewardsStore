@@ -1,9 +1,9 @@
 ﻿@model Admin
 <h2>Register for a new account</h2>
-@using (Html.BeginForm("RegisterAdmin", "Admin", "Post"))
+@using (Html.BeginForm("RegisterAdmin", "Admin", "Post")) // posts new ID, email, and password to Admin controller, RegisterAdmin action
 {
     <br>
-    <input asp-for="ID" type="hidden" value="" />
+    <input asp-for="AdminID" type="hidden" value="" />
     <label asp-for="Email" class="control-label">Email</label>
     <input type="text" name="Email" class="form-control" value="" />
     <br>
