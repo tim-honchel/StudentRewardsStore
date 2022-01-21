@@ -1,6 +1,6 @@
 ﻿@model Organization
 <h2>Create a New Store</h2>
-<p>Admin ID:</p>
+
 @using (Html.BeginForm("SaveNewStore", "Organization", "Post")) // Posts new ID, store name, store URL, and currency name to Organization controller, SaveNewStore action
 {
     <br>
@@ -11,12 +11,13 @@
     <br>
     <label asp-for="StoreURL" class="control-label">Store URL</label>
     <p><em>www.studentrewardsstore.com/yourcustomurlhere</em></p>
-    <input type="text" name="StoreURL" class="form-control" />
+    <input type="text" name="StoreURL" class="form-control" value="" />
     <br>
     <label asp-for="CurrencyName" class="control-label">Name of Store Currency</label>
     <p><em>Prices will be in your own pseudo-currency.</em></p>
-    <input type="text" name="CurrencyName" class="form-control" />
+    <input type="text" name="CurrencyName" class="form-control" value="" />
     <br>
-    <input type="submit" value="Create Store" class="btn btn-primary" />
     <input asp-for="_AdminID" type="hidden" value="@ViewBag.Message" />
+    <input type="submit" value="Create Store" class="btn btn-primary" />
+    
 }

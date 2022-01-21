@@ -1,0 +1,39 @@
+﻿@model Prize
+
+@*Inputs information to create a new prize*@
+
+<h2>Add a Prize to the Store</h2>
+<p>Enter the information and click "Create".</p>
+@using (Html.BeginForm("SaveNewPrize", "Prize", "Post")) // posts email and password to admin controller, overview action
+{
+    <input asp-for="PrizeID" type="hidden" value="" />
+    <br>
+    <label asp-for="PrizeName" class="control-label">Name</label>
+    <input type="text" name="PrizeName" class="form-control" value="" />
+    <br>
+    <label asp-for="Description" class="control-label">Description</label>
+    <input type="text" name="Description" class="form-control" value="" />
+    <br>
+    <label asp-for="ImageLink" class="control-label">Image Link</label>
+    <input type="text" name="ImageLink" class="form-control" value="" />
+    <br>
+    <label asp-for="Price" class="control-label">Price</label>
+    <input type="text" name="Price" class="form-control" value="" />
+    <br>
+    <label asp-for="DisplayStatus" class="control-label">Show or Hide in Store</label>
+    <input type="text" name="DisplayStatus" class="form-control" value="" />
+    <br>
+    <label asp-for="Inventory" class="control-label">Current Inventory Count</label>
+    <input type="text" name="Inventory" class="form-control" value="" />
+    <br>
+    <label asp-for="ValueTowardsLimit" class="control-label">Cost Towards Weekly Limit</label>
+    <input type="text" name="ValueTowardsLimit" class="form-control" value="" />
+    <br>
+    <input asp-for="_OrganizationID" type="hidden" value="@ViewBag.Message" />
+    <input type="submit" value="Create" class="btn btn-primary" />
+    
+}
+@{
+        TempData["authenticateOrganizationID"] = ViewBag.Message; // saves store ID for future authentication
+}
+

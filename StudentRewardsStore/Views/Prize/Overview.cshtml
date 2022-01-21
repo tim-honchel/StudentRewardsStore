@@ -1,0 +1,26 @@
+﻿@model IEnumerable<Prize>
+
+@*Displays prizes with links to edit or create new*@
+
+<h2>List of Prizes</h2>
+<p>Select a prize to modify:</p>
+
+
+<table class="table">
+    <tr>
+        <th>Prize Name</th>
+    </tr>
+
+    @foreach (var prize in Model) // displays each prize associated with the store, with a link to that prize
+    {
+        <tr>
+            <td><a href="/Prize/Index/@prize.PrizeID">@prize.PrizeName</a></td> 
+        </tr>
+    }
+
+</table>
+<a asp-area="" asp-controller="Prize" asp-action="CreatePrize">Add a New Prize</a>
+
+@{
+        TempData["authenticateOrganizationID"] = ViewBag.Message; // saves store ID for future authentication
+}

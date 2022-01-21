@@ -7,5 +7,6 @@ namespace StudentRewardsStore
         public Organization OpenStore(int id);
         public void SaveNewStore(Organization organization);
         public Organization RefreshStore(Organization newStore);
+        public void UpdateStore(Organization store);
     }
 }

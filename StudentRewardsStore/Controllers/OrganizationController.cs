@@ -55,7 +55,16 @@ namespace StudentRewardsStore.Controllers
             TempData["authenticateAdminID"] = newStore._AdminID; // saves the admin ID for future use
             return RedirectToAction("Overview", new {id = refreshedStore.OrganizationID}); // redirects to the Store Overview page
         }
-        
+        public IActionResult Settings(int id) // receives store ID
+        {
+            var store = repo.OpenStore(id);
+            return View(store); ;
+        }
+        public IActionResult UpdateStore(Organization store)
+        {
+            repo.UpdateStore(store);
+            return RedirectToAction("Overview", new { id = store.OrganizationID });
+        }
     }
 }
 

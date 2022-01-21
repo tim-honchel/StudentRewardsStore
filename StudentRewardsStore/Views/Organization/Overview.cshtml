@@ -6,11 +6,11 @@
 <p>Welcome</p>
 
 <h6>Store Info</h6>
-<p>URL: @Model.StoreURL</p>
-<p>Currency: @Model.CurrencyName</p>
-<p>Status: @Model.StoreStatus</p>
-<p>AutoSchedule: @Model.AutoSchedule</p>
-<a>Edit Store Settings</a>
+<p id="close"><u>URL:</u> @Model.StoreURL</p>
+<p id="close"><u>Currency:</u> @Model.CurrencyName</p>
+<p id="close"><u>Status:</u>> @Model.StoreStatus</p>
+<p id="close"><u>AutoSchedule:</u> @Model.AutoSchedule</p>
+<a asp-area="" asp-controller="Organization" asp-action="Settings" asp-route-id="@Model.OrganizationID">Edit store settings</a>
 <br>
 <br>
 <h6>Students</h6>
@@ -18,7 +18,7 @@
 <br>
 <br>
 <h6>Prizes</h6>
-<a>View/Modify/Add Prizes</a>
+<a asp-area="" asp-controller="Prize" asp-action="Overview">View, modify, or add prizes</a>
 <br>
 <br>
 <h6>Orders</h6>

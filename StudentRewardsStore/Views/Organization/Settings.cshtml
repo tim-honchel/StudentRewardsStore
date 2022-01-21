@@ -1,0 +1,22 @@
+﻿@model Organization
+<h2>Store Settings</h2>
+<p>Edit the information below and click "Update."</p>
+@using (Html.BeginForm("UpdateStore", "Organization", "Post")) // Posts store name, store URL, and currency name to Organization controller, UpdateStore action
+{
+    <br>
+    <input asp-for="OrganizationID" type="hidden" value="@Model.OrganizationID" />
+    <label asp-for="Name" class="control-label">Name of Store</label>
+    <p><em>This is what students will see at the top of the web page.</em></p>
+    <input type="text" name="Name" class="form-control" value="@Model.Name" />
+    <br>
+    <label asp-for="StoreURL" class="control-label">Store URL</label>
+    <p><em>www.studentrewardsstore.com/yourcustomurlhere</em></p>
+    <input type="text" name="StoreURL" class="form-control" value="@Model.StoreURL" />
+    <br>
+    <label asp-for="CurrencyName" class="control-label">Name of Store Currency</label>
+    <p><em>Prices will be in your own pseudo-currency.</em></p>
+    <input type="text" name="CurrencyName" class="form-control" value="@Model.CurrencyName" />
+    <br>
+    <input type="submit" value="Update" class="btn btn-primary" />
+ 
+}

@@ -24,5 +24,11 @@ namespace StudentRewardsStore
         {
             return _conn.QuerySingle<Organization>("SELECT * FROM organizations WHERE Name = @Name AND StoreURL = @StoreURL;", new { Name = newStore.Name, StoreURL = newStore.StoreURL });
         }
+        public void UpdateStore(Organization store)
+        {
+            _conn.Execute("UPDATE organizations SET Name = @Name, StoreURL = @StoreURL, CurrencyName = @CurrencyName WHERE OrganizationID = @OrganizationID;",
+               new { Name = store.Name, StoreURL = store.StoreURL, CurrencyName = store.CurrencyName, OrganizationID = store.OrganizationID });
+
+        }
     }
 }
