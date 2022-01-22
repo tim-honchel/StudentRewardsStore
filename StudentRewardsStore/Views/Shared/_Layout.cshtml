@@ -19,12 +19,27 @@
                 </button>
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
                     <ul class="navbar-nav flex-grow-1">
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="User" asp-action="Login">Students</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Admin" asp-action="Login">Admins</a>
-                        </li>
+                        @if (Authentication.Type != "student" && Authentication.Type != "admin")
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="User" asp-action="Login">Student Login</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Admin" asp-action="Login">Admin Login</a>
+                            </li>
+                        }
+                        @if (Authentication.Type == "student")
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="User" asp-action="Store">Store Page</a>
+                            </li>
+                        }
+                        @if (Authentication.Type == "admin")
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" href="/Organization/Index/@Authentication.StoreID" >Store Dashboard</a>
+                            </li>
+                        }
                         @if (Authentication.Type == "student" || Authentication.Type == "admin")
                         {
                             <li class="nav-item">

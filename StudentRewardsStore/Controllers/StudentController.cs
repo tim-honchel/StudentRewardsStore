@@ -15,20 +15,38 @@ namespace StudentRewardsStore.Controllers
         public IActionResult Index(int id)
         {
             var student = repo.ViewStudent(id);
-            return View(student);
+            if (Authentication.StoreID == student._OrganizationID)
+            {
+                return View(student);
+            }
+            else
+            {
+                return RedirectToAction("NotSignedIn", "Admin");
+            }
+            
         }
         public IActionResult Overview()
         {
-            var authenticate = Convert.ToInt32(TempData["authenticateOrganizationID"]);
-            ViewBag.Message = authenticate;
-            var students = repo.ListStudents(authenticate);
-            return View(students);
+            if (Authentication.Type == "admin" && Authentication.StoreID > 0)
+            {
+                var students = repo.ListStudents(Authentication.StoreID);
+                return View(students);
+            }
+            else
+            {
+                return RedirectToAction("NotSignedIn", "Admin");
+            }
         }
         public IActionResult AddStudent()
         {
-            var authenticate = Convert.ToInt32(TempData["authenticateOrganizationID"]);
-            ViewBag.Message = authenticate;
-            return View();
+            if (Authentication.Type == "admin" && Authentication.StoreID > 0)
+            {
+                return View();
+            }
+            else
+            {
+                return RedirectToAction("NotSignedIn", "Admin");
+            }
         }
         public IActionResult SaveNewStudent(Student newStudent)
         {

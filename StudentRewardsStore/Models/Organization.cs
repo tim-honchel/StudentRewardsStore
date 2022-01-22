@@ -4,7 +4,6 @@
     {
         public int OrganizationID { get; set; } // primary key
         public string Name { get; set; }
-        public string StoreURL { get; set; }
         public string CurrencyName { get; set; }
         public string AutoSchedule { get; set; }
         public string StoreStatus { get; set; }

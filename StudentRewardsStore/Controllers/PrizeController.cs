@@ -14,11 +14,9 @@ namespace StudentRewardsStore.Controllers
         public IActionResult Index(int id) // receives prize ID
         {
             
-            int authenticate = Convert.ToInt32(TempData["authenticateOrganizationID"]); // stores organization ID from previous page
             var prize = repo.ViewPrize(id); // retrieves the relevant prize
-            if (authenticate == prize._OrganizationID)
+            if (Authentication.StoreID == prize._OrganizationID)
             {
-                ViewBag.Message = authenticate; //saves the organization ID for future authentication purposes
                 return View(prize); // the specific prize page
             }
             else
@@ -28,22 +26,26 @@ namespace StudentRewardsStore.Controllers
         }
         public IActionResult Overview()
         {
-            try
-            {
-                int authenticate = Convert.ToInt32(TempData["authenticateOrganizationID"]); // stores organization ID from previous page
-                var prizes = repo.ListPrizes(authenticate); // retrieves all the store's prizes
-                ViewBag.Message = authenticate; // saves the organization ID for future authentication purposes
+            if (Authentication.Type == "admin" && Authentication.StoreID > 0 )
+            { 
+                var prizes = repo.ListPrizes(Authentication.StoreID); // retrieves all the store's prizes
                 return View(prizes); // the prize overview page
             }
-            catch (Exception)
+            else
             {
                 return RedirectToAction("NotSignedIn", "Admin");
             }
         }
         public IActionResult CreatePrize()
         {
-            ViewBag.Message = TempData["AuthenticateOrganizationID"];
-            return View();
+            if (Authentication.Type == "admin")
+            {
+                return View();
+            }
+            else
+            {
+                return RedirectToAction("NotSignedIn", "Admin");
+            }
         }
         public IActionResult SaveNewPrize(Prize newPrize)
         {

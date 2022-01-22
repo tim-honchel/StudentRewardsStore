@@ -8,6 +8,7 @@
 
 <table class="table">
     <tr>
+        <th>Student ID</th>
         <th>Student Name</th>
         <th>Balance</th>
         <th>Category</th>
@@ -17,6 +18,7 @@
     @foreach (var student in Model) // displays each student associated with the store, with a link to that student
     {
         <tr>
+            <td>@student.StudentID</td>
             <td><a href="/Student/Index/@student.StudentID">@student.StudentName</a></td>
             <td>@student.Balance</td>
             <td>@student.Category</td>
@@ -26,9 +28,3 @@
 
 </table>
 <a asp-area="" asp-controller="Student" asp-action="AddStudent">Add a New Student</a>
-
-
-
-@{
-        TempData["authenticateOrganizationID"] = ViewBag.Message; // saves store ID for future authentication
-}

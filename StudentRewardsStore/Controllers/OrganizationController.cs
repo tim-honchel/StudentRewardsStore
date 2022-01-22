@@ -21,12 +21,10 @@ namespace StudentRewardsStore.Controllers
         
         public IActionResult Overview(int id) // receives store ID
         {
-            int authenticate = Convert.ToInt32( TempData["authenticateAdminID"]); // stores admin ID from previous page
             var store = repo.OpenStore(id); // retrieves the relevant store
-            if (authenticate == store._AdminID) // authenticates that the admin ID matches the store's admin ID
+            if (Authentication.AdminID == store._AdminID) // authenticates that the admin ID matches the store's admin ID
             {
                 Authentication.StoreID = store.OrganizationID;
-                ViewBag.Message = store.OrganizationID; // saves the store ID for future authentication
                 return View(store); // the Store Overview page
             }
             else
@@ -38,10 +36,8 @@ namespace StudentRewardsStore.Controllers
       
         public IActionResult CreateStore()
         {
-            int authenticate = Convert.ToInt32(TempData["authenticateAdminID"]); // stores admin ID from previous page
-            if (authenticate > 0) // checks that an admin is logged in
+            if (Authentication.Type == "admin") // checks that an admin is logged in
             {
-                ViewBag.Message = authenticate; // saves the admin ID for future use
                 return View(); // the Create Store page
             }
             else
@@ -53,13 +49,19 @@ namespace StudentRewardsStore.Controllers
         {
             repo.SaveNewStore(newStore); // adds the new store to the database
             var refreshedStore = repo.RefreshStore(newStore); // retrieves the store with its auto-generated store ID
-            TempData["authenticateAdminID"] = newStore._AdminID; // saves the admin ID for future use
             return RedirectToAction("Overview", new {id = refreshedStore.OrganizationID}); // redirects to the Store Overview page
         }
         public IActionResult Settings(int id) // receives store ID
         {
-            var store = repo.OpenStore(id);
-            return View(store); ;
+            if (Authentication.StoreID == id)
+            {
+                var store = repo.OpenStore(id);
+                return View(store); ;
+            }
+            else
+            {
+                return RedirectToAction("NotSignedIn", "Admin");
+            }
         }
         public IActionResult UpdateStore(Organization store)
         {
