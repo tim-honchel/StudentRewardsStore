@@ -1,2 +1,23 @@
 ﻿@model IEnumerable<Prize>
-<h2>Store</h2>
+<h2>@StoreInfo.StoreName</h2>
+<p>Welcome @StoreInfo.StudentName! You have @StoreInfo.Balance @StoreInfo.Currency. The store is @StoreInfo.StoreStatus.</p>
+
+<table class="table">
+    <tr>
+        <th>Item</th>
+        <th>Description</th>
+        <th>@StoreInfo.Currency</th>
+        <th>How Many Left</th>
+    </tr>
+
+    @foreach (var prize in Model) // displays each prize associated with the store, with a link to that prize
+    {
+        <tr>
+            <td>@prize.PrizeName</td>
+            <td>@prize.Description</td>
+            <td>@prize.Price</td>
+            <td>@prize.Inventory</td>
+        </tr>
+    }
+
+</table>

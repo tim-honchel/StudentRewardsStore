@@ -9,7 +9,9 @@ namespace StudentRewardsStore
         public Prize ViewPrize(int prizeID);
         public void UpdatePrize(Prize prize);
         public void AddPrize(Prize newPrize);
-        
+        public IEnumerable<Prize> ShowAvailablePrizes(int organizationID);
+
+
 
     }
 }

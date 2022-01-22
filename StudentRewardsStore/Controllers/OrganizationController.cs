@@ -25,6 +25,7 @@ namespace StudentRewardsStore.Controllers
             var store = repo.OpenStore(id); // retrieves the relevant store
             if (authenticate == store._AdminID) // authenticates that the admin ID matches the store's admin ID
             {
+                Authentication.StoreID = store.OrganizationID;
                 ViewBag.Message = store.OrganizationID; // saves the store ID for future authentication
                 return View(store); // the Store Overview page
             }

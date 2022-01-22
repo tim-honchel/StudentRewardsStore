@@ -7,10 +7,14 @@ namespace StudentRewardsStore.Controllers
     public class UserController : Controller
     {
         private readonly IStudentsRepository studentRepo;
+        private readonly IOrganizationsRepository orgRepo;
+        private readonly IPrizesRepository prizeRepo;
 
-        public UserController(IStudentsRepository studentRepo)
+        public UserController(IStudentsRepository studentRepo, IOrganizationsRepository orgRepo, IPrizesRepository prizeRepo)
         {
             this.studentRepo = studentRepo;
+            this.orgRepo = orgRepo;
+            this.prizeRepo = prizeRepo;
         }
         public IActionResult Index()
         {
@@ -27,7 +31,10 @@ namespace StudentRewardsStore.Controllers
                 var record = studentRepo.ViewStudent(user.StudentID);
                 if (user.StudentID == record.StudentID && record.PIN == null)
                 {
-                    var authenticate = new User() { Type = "student", StudentID = user.StudentID, AdminId = null, StoreID = user._OrganizationID };
+                    Authentication.Type = "student";
+                    Authentication.StudentID = user.StudentID;
+                    Authentication.AdminID = -1;
+                    Authentication.StoreID = studentRepo.ViewStudent(user.StudentID)._OrganizationID;
                     return RedirectToAction("Store");
                 }
                 else
@@ -49,7 +56,10 @@ namespace StudentRewardsStore.Controllers
                 var record = studentRepo.ViewStudent(user.StudentID);
                 if (user.PIN == record.PIN)
                 {
-                    var authenticate = new User() { Type = "student", StudentID = user.StudentID, AdminId = null, StoreID = user._OrganizationID};
+                    Authentication.Type = "student";
+                    Authentication.StudentID = user.StudentID;
+                    Authentication.AdminID = -1;
+                    Authentication.StoreID = studentRepo.ViewStudent(user.StudentID)._OrganizationID;
                     return RedirectToAction("Store");
                 }
                 else
@@ -68,7 +78,35 @@ namespace StudentRewardsStore.Controllers
         }
         public IActionResult Store()
         {
-            return View();
+            if (Authentication.Type == "student")
+            {
+                var student = studentRepo.ViewStudent(Authentication.StudentID);
+                var store = orgRepo.OpenStore(Authentication.StoreID);
+                StoreInfo.StudentName = student.StudentName;
+                StoreInfo.Balance = student.Balance;
+                StoreInfo.StoreName = store.Name;
+                StoreInfo.StoreStatus = store.StoreStatus;
+                StoreInfo.Currency = store.CurrencyName;
+                var prizes = prizeRepo.ShowAvailablePrizes(Authentication.StoreID);
+                return View(prizes);
+            }
+            else
+            {
+                return RedirectToAction("Login");
+            }
+        }
+        public IActionResult Logout()
+        {
+            Authentication.Type = "";
+            Authentication.StudentID = -1;
+            Authentication.AdminID = -1;
+            Authentication.StoreID = -1;
+            StoreInfo.StudentName = "";
+            StoreInfo.Balance = -1;
+            StoreInfo.StoreName = "";
+            StoreInfo.StoreStatus = "";
+            StoreInfo.Currency = "";
+            return RedirectToAction("Index", "Home");
         }
     }
 }

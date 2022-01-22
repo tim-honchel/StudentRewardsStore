@@ -30,12 +30,20 @@ namespace StudentRewardsStore.Controllers
 
         public IActionResult Overview(string email, string unhashed) // receives the email and password from the login page
         {
+            
             try
             {
                 var authenticate = repo.CheckPassword(email, unhashed); // authenticates that the mail and password match the database record
                 var stores = repo.ListStores(authenticate.AdminID); // retrieves all the stores owned by the admin
                 var admin = repo.GetAdminID(email); // retrieves the admin
                 ViewBag.Message = admin.AdminID; // saves the admin ID for future authentication purposes
+
+                Authentication.Type = "admin";
+                Authentication.StudentID = -1;
+                Authentication.AdminID = admin.AdminID;
+                Authentication.StoreID = -1;
+
+
                 return View(stores); // the admin overview page
             }
             catch (Exception)

@@ -32,5 +32,9 @@ namespace StudentRewardsStore
             _conn.Execute("INSERT INTO prizes (PrizeID, PrizeName, Description, ImageLink, Price, DisplayStatus, Inventory, ValueTowardsLimit, _OrganizationID) VALUES (@PrizeID, @PrizeName, @Description, @ImageLink, @Price, @DisplayStatus, @Inventory, @ValueTowardsLimit, @OrganizationID);", new { PrizeID = newPrize.PrizeID, PrizeName = newPrize.PrizeName, Description = newPrize.Description, ImageLink = newPrize.ImageLink, Price = newPrize.Price, DisplayStatus = newPrize.DisplayStatus, Inventory = newPrize.Inventory, ValueTowardsLimit = newPrize.ValueTowardsLimit, OrganizationID = newPrize._OrganizationID }) ;
             
         }
+        public IEnumerable<Prize> ShowAvailablePrizes(int organizationID)
+        {
+            return _conn.Query<Prize>("SELECT * FROM prizes WHERE _OrganizationID = @OrganizationID AND DisplayStatus = 'show' ORDER BY Price;", new { OrganizationID = organizationID });
+        }
     }
 }
