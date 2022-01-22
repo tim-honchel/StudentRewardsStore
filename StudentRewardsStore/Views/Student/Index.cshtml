@@ -1,0 +1,31 @@
+﻿@model Student
+
+@*Displays editable student information*@
+
+<h2>@Model.StudentName</h2>
+<p>Edit the student's' information, then click "Update."</p>
+@using (Html.BeginForm("UpdateStudent", "Student", "Post")) // posts updated values to Student controller, UpdateStudent action
+{
+    <input asp-for="StudentID" type="hidden" value="@Model.StudentID" />
+    <br>
+    <label asp-for="StudentName" class="control-label">Name</label>
+    <input type="text" name="StudentName" class="form-control" value="@Model.StudentName" />
+    <br>
+    <label asp-for="PIN" class="control-label">PIN</label>
+    <input type="text" name="PIN" class="form-control" value="@Model.PIN" />
+    <br>
+    <label asp-for="Category" class="control-label">Category</label>
+    <input type="text" name="Category" class="form-control" value="@Model.Category" />
+    <br>
+    <label asp-for="Balance" class="control-label">Balance</label>
+    <input type="text" name="Balance" class="form-control" value="@Model.Balance" />
+    <br>
+    <label asp-for="Status" class="control-label">Show or Hide in Store</label>
+    <input type="text" name="Status" class="form-control" value="@Model.Status" />
+    <br>
+    <input type="submit" value="Update" class="btn btn-primary" />
+}
+
+@{
+        TempData["authenticateOrganizationID"] = ViewBag.Message; // saves store ID for future authentication
+}

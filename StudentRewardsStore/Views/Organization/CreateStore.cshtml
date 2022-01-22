@@ -19,5 +19,9 @@
     <br>
     <input asp-for="_AdminID" type="hidden" value="@ViewBag.Message" />
     <input type="submit" value="Create Store" class="btn btn-primary" />
-    
+}
+<br>
+
+@{
+        TempData["authenticateOrganizationID"] = ViewBag.Message; // saves store ID for future authentication
 }

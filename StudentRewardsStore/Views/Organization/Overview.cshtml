@@ -6,15 +6,14 @@
 <p>Welcome</p>
 
 <h6>Store Info</h6>
-<p id="close"><u>URL:</u> @Model.StoreURL</p>
-<p id="close"><u>Currency:</u> @Model.CurrencyName</p>
-<p id="close"><u>Status:</u>> @Model.StoreStatus</p>
-<p id="close"><u>AutoSchedule:</u> @Model.AutoSchedule</p>
+<p id="close">@Model.CurrencyName is the currency</p>
+<p id="close">The store is currently @Model.StoreStatus</p>
+<p id="close">Auto schedule is turned @Model.AutoSchedule</p>
 <a asp-area="" asp-controller="Organization" asp-action="Settings" asp-route-id="@Model.OrganizationID">Edit store settings</a>
 <br>
 <br>
 <h6>Students</h6>
-<a>View/Modify/Add Students</a>
+<a asp-area="" asp-controller="Student" asp-action="Overview">View, modify, or add students</a>
 <br>
 <br>
 <h6>Prizes</h6>

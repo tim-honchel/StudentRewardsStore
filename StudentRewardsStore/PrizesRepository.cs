@@ -30,7 +30,7 @@ namespace StudentRewardsStore
         public void AddPrize(Prize newPrize)
         {
             _conn.Execute("INSERT INTO prizes (PrizeID, PrizeName, Description, ImageLink, Price, DisplayStatus, Inventory, ValueTowardsLimit, _OrganizationID) VALUES (@PrizeID, @PrizeName, @Description, @ImageLink, @Price, @DisplayStatus, @Inventory, @ValueTowardsLimit, @OrganizationID);", new { PrizeID = newPrize.PrizeID, PrizeName = newPrize.PrizeName, Description = newPrize.Description, ImageLink = newPrize.ImageLink, Price = newPrize.Price, DisplayStatus = newPrize.DisplayStatus, Inventory = newPrize.Inventory, ValueTowardsLimit = newPrize.ValueTowardsLimit, OrganizationID = newPrize._OrganizationID }) ;
-            //_conn.Execute("INSERT INTO organizations (OrganizationID, Name, StoreURL, CurrencyName, _AdminID) VALUES (@OrganizationID, @Name, @StoreURL, @CurrencyName, @AdminID);", new { OrganizationID = newStore.OrganizationID, Name = newStore.Name, StoreURL = newStore.StoreURL, CurrencyName = newStore.CurrencyName, AdminID = newStore._AdminID });
+            
         }
     }
 }

@@ -9,17 +9,25 @@
 <table class="table">
     <tr>
         <th>Prize Name</th>
+        <th>Price</th>
+        <th>Inventory</th>
+        <th>Display Status</th>
     </tr>
 
     @foreach (var prize in Model) // displays each prize associated with the store, with a link to that prize
     {
         <tr>
-            <td><a href="/Prize/Index/@prize.PrizeID">@prize.PrizeName</a></td> 
+            <td><a href="/Prize/Index/@prize.PrizeID">@prize.PrizeName</a></td>
+            <td>@prize.Price</td>
+            <td>@prize.Inventory</td>
+            <td>@prize.DisplayStatus</td>
         </tr>
     }
 
 </table>
 <a asp-area="" asp-controller="Prize" asp-action="CreatePrize">Add a New Prize</a>
+
+<br>
 
 @{
         TempData["authenticateOrganizationID"] = ViewBag.Message; // saves store ID for future authentication
