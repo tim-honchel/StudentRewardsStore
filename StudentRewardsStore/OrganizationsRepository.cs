@@ -26,8 +26,8 @@ namespace StudentRewardsStore
         }
         public void UpdateStore(Organization store)
         {
-            _conn.Execute("UPDATE organizations SET Name = @Name, CurrencyName = @CurrencyName, StoreStatus = @StoreStatus, TimeZone = @TimeZone, CloseDay = @CloseDay, CloseTime = @CloseTime, OpenDay = @OpenDay, OpenTime = @OpenTime, WeeklyLimit = @WeeklyLimit WHERE OrganizationID = @OrganizationID;",
-               new { Name = store.Name, CurrencyName = store.CurrencyName, StoreStatus = store.StoreStatus, TimeZone = store.TimeZone, CloseDay = store.CloseDay, CloseTime = store.CloseTime, OpenDay = store.OpenDay, OpenTime = store.OpenTime, WeeklyLimit = store.WeeklyLimit, OrganizationID = store.OrganizationID });
+            _conn.Execute("UPDATE organizations SET Name = @Name, CurrencyName = @CurrencyName, StoreStatus = @StoreStatus, AutoSchedule = @AutoSchedule, TimeZone = @TimeZone, CloseDay = @CloseDay, CloseTime = @CloseTime, OpenDay = @OpenDay, OpenTime = @OpenTime, WeeklyLimit = @WeeklyLimit WHERE OrganizationID = @OrganizationID;",
+               new { Name = store.Name, CurrencyName = store.CurrencyName, StoreStatus = store.StoreStatus, autoSchedule = store.AutoSchedule, TimeZone = store.TimeZone, CloseDay = store.CloseDay, CloseTime = store.CloseTime, OpenDay = store.OpenDay, OpenTime = store.OpenTime, WeeklyLimit = store.WeeklyLimit, OrganizationID = store.OrganizationID });
 
         }
     }

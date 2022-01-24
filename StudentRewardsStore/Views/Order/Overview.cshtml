@@ -6,24 +6,25 @@
 
 <table class="table">
     <tr>
-        <th>Order Date</th>
+        
+        <th>Order #</th>
         <th>Student Name</th>
-        <th>Category</th>
         <th>Item</th>
         <th>Quantity</th>
         <th>Cost</th>
+        <th>Order Date</th>
         <th>Status</th>
     </tr>
 
     @foreach (var order in Model) // displays each order associated with the store, with a link to that order
     {
         <tr>
-            <td>@order.OrderDate</td>
-            <td>Name</td>
-            <td>Category</td>
-            <td><a href="/Order/Index/@order.OrderID">Prize</a></td>
+            <td><a href="/Order/Index/@order.OrderID">@order.OrderID</a></td>
+            <td>@order.StudentName</td>
+            <td>@order.PrizeName</td>
             <td>@order.Quantity</td>
             <td>@order.Cost</td>
+            <td>@order.OrderDate</td>
             <td>@order.FulfillmentStatus</td>
         </tr>
     }

@@ -16,7 +16,7 @@ namespace StudentRewardsStore
         }
         public IEnumerable<Order> ShowAllOrders(int storeID)
         {
-            return _conn.Query<Order>("SELECT * FROM orders WHERE _Organization_ID_ = @OrganizationID;", new { OrganizationID = storeID });
+            return _conn.Query<Order>("SELECT * FROM orders LEFT JOIN students ON orders._StudentID = students.StudentID LEFT JOIN prizes ON orders._PrizeID = prizes.PrizeID WHERE _Organization_ID_ = @OrganizationID;", new { OrganizationID = storeID });
         }
         public void UpdateOrder(Order order)
         {
@@ -25,7 +25,7 @@ namespace StudentRewardsStore
         }
         public Order ViewOrder(int orderID)
         {
-            return _conn.QuerySingle<Order>("SELECT * FROM orders WHERE OrderID = @OrderID;", new { OrderID = orderID });
+            return _conn.QuerySingle<Order>("SELECT * FROM orders LEFT JOIN students ON orders._StudentID = students.StudentID LEFT JOIN prizes ON orders._PrizeID = prizes.PrizeID WHERE OrderID = @OrderID;", new { OrderID = orderID });
         }
     }
 }

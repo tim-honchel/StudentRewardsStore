@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using StudentRewardsStore.Models;
 
 namespace StudentRewardsStore.Controllers
 {
@@ -9,9 +10,9 @@ namespace StudentRewardsStore.Controllers
         {
             this.repo = repo;
         }
-        public IActionResult Index(int orderID)
+        public IActionResult Index(int id)
         {
-            var order = repo.ViewOrder(orderID); // retrieves the relevant order
+            var order = repo.ViewOrder(id); // retrieves the relevant order
             if (Authentication.StoreID == order._Organization_ID_)
             {
                 return View(order); // the specific prize page
@@ -32,6 +33,11 @@ namespace StudentRewardsStore.Controllers
             {
                 return RedirectToAction("NotSignedIn", "Admin");
             }
+        }
+        public IActionResult UpdateOrder(Order order)
+        {
+            repo.UpdateOrder(order);
+            return RedirectToAction("Overview");
         }
     }
 }

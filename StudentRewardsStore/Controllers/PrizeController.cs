@@ -13,7 +13,6 @@ namespace StudentRewardsStore.Controllers
         }
         public IActionResult Index(int id) // receives prize ID
         {
-            
             var prize = repo.ViewPrize(id); // retrieves the relevant prize
             if (Authentication.StoreID == prize._OrganizationID)
             {
@@ -50,8 +49,6 @@ namespace StudentRewardsStore.Controllers
         public IActionResult SaveNewPrize(Prize newPrize)
         {
             repo.AddPrize(newPrize);
-            ViewBag.Message = TempData["AuthenticateOrganizationID"];
-            TempData["AuthenticateOrganizationID"] = newPrize._OrganizationID;
             return RedirectToAction("Overview");
         }
         public IActionResult UpdatePrize(Prize prize)

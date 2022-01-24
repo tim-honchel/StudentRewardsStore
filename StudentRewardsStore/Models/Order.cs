@@ -13,5 +13,7 @@ namespace StudentRewardsStore.Models
         public int _StudentID { get; set; }
         public int _PrizeID { get; set; }
         public int _Organization_ID_ { get; set; }
+        public string StudentName { get; set; }
+        public string PrizeName { get; set; }
     }
 }

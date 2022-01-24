@@ -1,0 +1,20 @@
+﻿@model Deposit
+
+<h2>Record a New Deposit</h2>
+<p>Enter the information and click "Record".</p>
+@using (Html.BeginForm("SaveNewDeposit", "Deposit", "Post"))
+{
+    <input asp-for="DepositID" type="hidden" value="" />
+    <br>
+    <label asp-for="_Student_ID" class="control-label">Student ID</label>
+    <input type="text" name="_Student_ID" class="form-control" value="" />
+    <br>
+    <label asp-for="Date" class="control-label">Date</label>
+    <input type="text" name="Date" class="form-control" value="@DateTime.Now" />
+    <br>
+    <label asp-for="Amount" class="control-label">Amount</label>
+    <input type="text" name="Amount" class="form-control" value="0" />
+    <br>
+    <input asp-for="_Organization_ID" type="hidden" value="@Authentication.StoreID" />
+    <input type="submit" value="Record" class="btn btn-primary" />
+}

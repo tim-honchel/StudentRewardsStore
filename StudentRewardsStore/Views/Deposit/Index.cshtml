@@ -1,3 +1,17 @@
 ﻿@model Deposit
 
-<h2>Edit Deposit</h2>
+<h2>Deposit #@Model.DepositID for @Model.StudentName</h2>
+<p>Modify the deposit information, then click "Update."</p>
+@using (Html.BeginForm("UpdateDeposit", "Deposit", "Post")) // posts inputted values to Deposit controller, UpdateDeposit action
+{
+    <input asp-for="DepositID" type="hidden" value="@Model.DepositID" />
+    <br>
+    <label asp-for="Date" class="control-label">Date</label>
+    <input type="text" name="Date" class="form-control" value="@Model.Date" />
+    <br>
+    <label asp-for="Amount" class="control-label">Amount</label>
+    <input type="text" name="Amount" class="form-control" value="@Model.Amount" />
+    <br>
+    <input asp-for="_Student_ID" type="hidden" value="@Model._Student_ID" />
+    <input type="submit" value="Update" class="btn btn-primary" />
+}

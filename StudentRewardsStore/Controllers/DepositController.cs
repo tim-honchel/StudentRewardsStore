@@ -1,4 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using System;
+using StudentRewardsStore.Models;
 
 namespace StudentRewardsStore.Controllers
 {
@@ -9,9 +11,9 @@ namespace StudentRewardsStore.Controllers
         {
             this.repo = repo;
         }
-        public IActionResult Index(int depositID)
+        public IActionResult Index(int id)
         {
-            var deposit = repo.ViewDeposit(depositID); // retrieves the relevant deposit
+            var deposit = repo.ViewDeposit(id); // retrieves the relevant deposit
             if (Authentication.StoreID == deposit._Organization_ID)
             {
                 return View(deposit); // the specific deposit page
@@ -23,7 +25,6 @@ namespace StudentRewardsStore.Controllers
         }
         public IActionResult Overview()
         {
-
             if (Authentication.Type == "admin" && Authentication.StoreID > 0)
             {
                 var deposits = repo.ShowAllDeposits(Authentication.StoreID); // retrieves all the store's deposits
@@ -33,6 +34,28 @@ namespace StudentRewardsStore.Controllers
             {
                 return RedirectToAction("NotSignedIn", "Admin");
             }
+        }
+        public IActionResult UpdateDeposit(Deposit deposit)
+        {
+            repo.UpdateDeposit(deposit);
+            return RedirectToAction("Overview");
+        }
+        public IActionResult RecordDeposit(Deposit deposit)
+        {
+            if (Authentication.Type == "admin")
+            {
+                return View();
+            }
+            else
+            {
+                return RedirectToAction("NotSignedIn", "Admin");
+            }
+        }
+        public IActionResult SaveNewDeposit(Deposit newDeposit)
+        {
+            repo.AddDeposit(newDeposit);
+            
+            return RedirectToAction("Overview");
         }
     }
 }
