@@ -36,6 +36,8 @@ namespace StudentRewardsStore
             services.AddTransient<IAdminsRepository, AdminsRepository>();
             services.AddTransient<IPrizesRepository, PrizesRepository>();
             services.AddTransient<IStudentsRepository, StudentsRepository>();
+            services.AddTransient<IOrdersRepository, OrdersRepository>();
+            services.AddTransient<IDepositsRepository, DepositsRepository>();
 
             services.AddControllersWithViews();
         }
