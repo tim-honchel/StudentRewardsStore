@@ -2,22 +2,33 @@
 <h2>@StoreInfo.StoreName</h2>
 <p>Welcome @StoreInfo.StudentName! You have @StoreInfo.Balance @StoreInfo.Currency. The store is @StoreInfo.StoreStatus.</p>
 
+@using (Html.BeginForm("ReviewOrder", "User", "Post")) 
+{
+
 <table class="table">
     <tr>
         <th>Item</th>
         <th>Description</th>
         <th>@StoreInfo.Currency</th>
         <th>How Many Left</th>
+        <th>Order Quantity</th>
     </tr>
 
-    @foreach (var prize in Model) // displays each prize associated with the store, with a link to that prize
+    @foreach (var prize in Model)
     {
         <tr>
-            <td>@prize.PrizeName</td>
-            <td>@prize.Description</td>
-            <td>@prize.Price</td>
-            <td>@prize.Inventory</td>
+            <input type="hidden" name="PrizeID" value="@prize.PrizeID"/>
+            <td><input type="hidden" name="PrizeName" value="@prize.PrizeName"/>@prize.PrizeName</td>
+            <td><input type="hidden" name="Description" value="@prize.Description"/>@prize.Description</td>
+            <td><input type="hidden" name="Price" value="@prize.Price" />@prize.Price</td>
+            <td><input type="hidden" name="Inventory" value="@prize.Inventory" />@prize.Inventory</td>
+            <td><input type="text" name="Quantity" class="form-control" value="0" /></td>
         </tr>
     }
 
 </table>
+
+<br>
+    
+    <input type="submit" value="Review Order" class="btn btn-primary" />
+}

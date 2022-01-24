@@ -1,0 +1,30 @@
+﻿@model IEnumerable<Prize>
+<h2>Review Order for @StoreInfo.StoreName</h2>
+<p>Please review your order and press "Submit" when you are ready.</p>
+<p>#elements: @Model.Count()</p>
+
+@using (Html.BeginForm("SubmitOrder", "User", "Post")) 
+{
+
+<table class="table">
+    <tr>
+        <th>Item</th>
+        <th>@StoreInfo.Currency</th>
+        <th>Order Quantity</th>
+    </tr>
+
+    @foreach (var prize in Model) // displays each prize associated with the store, with a link to that prize
+    {
+        <tr>
+            <td>@prize.PrizeName</td>
+            <td>@prize.Price</td>
+            <td>@prize.Quantity></td>
+        </tr>
+    }
+
+</table>
+
+<br>
+    
+    <input type="submit" value="Submit" class="btn btn-primary" />
+}

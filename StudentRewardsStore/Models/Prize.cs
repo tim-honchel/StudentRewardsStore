@@ -11,5 +11,6 @@
         public int Inventory { get; set; }
         public int ValueTowardsLimit { get; set; }
         public int _OrganizationID { get; set; } // foreign key
+        public int Quantity { get; set; } // for facilitating orders only
     }
 }

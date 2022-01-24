@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using StudentRewardsStore.Models;
 using System;
+using System.Collections.Generic;
 
 namespace StudentRewardsStore.Controllers
 {
@@ -94,6 +95,10 @@ namespace StudentRewardsStore.Controllers
             {
                 return RedirectToAction("Login");
             }
+        }
+        public IActionResult ReviewOrder(IEnumerable<Prize> orders)
+        {
+            return View(orders);
         }
         public IActionResult Logout()
         {
