@@ -12,5 +12,6 @@
         public int ValueTowardsLimit { get; set; }
         public int _OrganizationID { get; set; } // foreign key
         public int Quantity { get; set; } // for facilitating orders only
+        public int Cost { get; set; } // for facilitating orders only
     }
 }

@@ -15,5 +15,6 @@ namespace StudentRewardsStore.Models
         public int _Organization_ID_ { get; set; }
         public string StudentName { get; set; } // for display only
         public string PrizeName { get; set; } // for display only
+        public int Price { get; set; } // for display only
     }
 }

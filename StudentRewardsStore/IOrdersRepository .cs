@@ -9,6 +9,7 @@ namespace StudentRewardsStore
         public IEnumerable<Order> ShowAllOrders(int storeID);
         public void UpdateOrder(Order order);
         public Order ViewOrder(int orderID);
+        public void SaveNewOrders(IEnumerable<Order> newOrders);
 
 
     }

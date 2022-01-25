@@ -11,12 +11,14 @@ namespace StudentRewardsStore.Controllers
         private readonly IStudentsRepository studentRepo;
         private readonly IOrganizationsRepository orgRepo;
         private readonly IPrizesRepository prizeRepo;
+        private readonly IOrdersRepository ordersRepo;
 
-        public UserController(IStudentsRepository studentRepo, IOrganizationsRepository orgRepo, IPrizesRepository prizeRepo)
+        public UserController(IStudentsRepository studentRepo, IOrganizationsRepository orgRepo, IPrizesRepository prizeRepo, IOrdersRepository orderRepo)
         {
             this.studentRepo = studentRepo;
             this.orgRepo = orgRepo;
             this.prizeRepo = prizeRepo;
+            this.ordersRepo = orderRepo;
         }
         public IActionResult Index()
         {
@@ -37,6 +39,8 @@ namespace StudentRewardsStore.Controllers
                     Authentication.StudentID = user.StudentID;
                     Authentication.AdminID = -1;
                     Authentication.StoreID = studentRepo.ViewStudent(user.StudentID)._OrganizationID;
+                    StoreInfo.CurrentOrder.Clear();
+                    StoreInfo.CartMessage = "";
                     return RedirectToAction("Store");
                 }
                 else
@@ -62,6 +66,8 @@ namespace StudentRewardsStore.Controllers
                     Authentication.StudentID = user.StudentID;
                     Authentication.AdminID = -1;
                     Authentication.StoreID = studentRepo.ViewStudent(user.StudentID)._OrganizationID;
+                    StoreInfo.CurrentOrder.Clear();
+                    StoreInfo.CartMessage = "";
                     return RedirectToAction("Store");
                 }
                 else
@@ -99,11 +105,12 @@ namespace StudentRewardsStore.Controllers
         }
         public IActionResult AddToCart(Prize addToCart)
         {
-            if (addToCart.Quantity > addToCart.Inventory)
+            addToCart.Cost = addToCart.Quantity * addToCart.Price;
+            if (addToCart.Quantity + StoreInfo.CurrentOrder.Where(x=>x.PrizeID == addToCart.PrizeID).Sum(x=>x.Quantity) > addToCart.Inventory)
             {
                 StoreInfo.CartMessage = $"Did not add {addToCart.PrizeName} because aren't enough left in the store.";
             }
-            else if (addToCart.Quantity * addToCart.Price > StoreInfo.Balance)
+            else if (addToCart.Cost + StoreInfo.CurrentOrder.Sum(x=>x.Cost) > StoreInfo.Balance)
             {
                 StoreInfo.CartMessage = $"Did not add {addToCart.PrizeName} because you don't have enough {StoreInfo.Currency}.";
             }
@@ -120,7 +127,29 @@ namespace StudentRewardsStore.Controllers
         }
         public IActionResult SubmitOrder()
         {
-            return View(StoreInfo.CurrentOrder);
+            var finalOrder = new List<Order>();
+           
+            foreach (var item in StoreInfo.CurrentOrder)
+            {
+                finalOrder.Add(createOrder(item));
+            }
+            ordersRepo.SaveNewOrders(finalOrder);
+            StoreInfo.CurrentOrder.Clear();
+            return View(finalOrder);
+        }
+        public Order createOrder(Prize item)
+        {
+            var individualItem = new Order();
+            individualItem.OrderDate = DateTime.Now;
+            individualItem.PrizeName = item.PrizeName;
+            individualItem.Quantity = item.Quantity;
+            individualItem.Price = item.Price;
+            individualItem.Cost = item.Cost;
+            individualItem.FulfillmentStatus = "unfulfilled";
+            individualItem._StudentID = Authentication.StudentID;
+            individualItem._Organization_ID_ = Authentication.StoreID;
+            individualItem._PrizeID = item.PrizeID;
+            return individualItem;
         }
         public IActionResult Logout()
         {
@@ -133,7 +162,11 @@ namespace StudentRewardsStore.Controllers
             StoreInfo.StoreName = "";
             StoreInfo.StoreStatus = "";
             StoreInfo.Currency = "";
+            StoreInfo.CurrentOrder.Clear();
+            StoreInfo.CartMessage = "";
             return RedirectToAction("Index", "Home");
         }
+
+        
     }
 }

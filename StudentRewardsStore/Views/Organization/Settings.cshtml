@@ -16,17 +16,16 @@
     <input type="text" name="CurrencyName" class="form-control" value="@Model.CurrencyName" />
     <br>
     
-    <label asp-for="WeeklyLimit" class="control-label">Weekly Limit on Select Items</label>
-    <p><em>This is the max students may spend on designated items that you wish to limit, such as candy (0 means no limit) </em></p>
-    <input type="text" name="WeeklyLimit" class="form-control" value="@Model.WeeklyLimit" />
-    <br>
-    
-    
     <label asp-for="StoreStatus" class="control-label">Store Status</label>
     <p><em>(open or closed)</em></p>
     <input type="text" name="StoreStatus" class="form-control" value="@Model.StoreStatus" />
     <br>
 
+@*    <label asp-for="WeeklyLimit" class="control-label">Weekly Limit on Select Items</label>
+    <p><em>This is the max students may spend on designated items that you wish to limit, such as candy (0 means no limit) </em></p>
+    <input type="text" name="WeeklyLimit" class="form-control" value="@Model.WeeklyLimit" />
+    <br>
+    
     <label asp-for="AutoSchedule" class="control-label">Auto Schedule</label>
     <p><em>(on or off) Schedule the store to open and close automatically at set times</em></p>
     <input type="text" name="AutoSchedule" class="form-control" value="@Model.AutoSchedule" />
@@ -55,7 +54,7 @@
     <label asp-for="OpenTime" class="control-label">Opening Time</label>
     <p><em>Time of the day store closes on auto schedule</em></p>
     <input type="text" name="OpenTime" class="form-control" value="@Model.OpenTime" />
-    <br>
+    <br>*@
 
     <input type="submit" value="Update" class="btn btn-primary" />
  
