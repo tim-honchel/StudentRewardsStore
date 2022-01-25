@@ -48,6 +48,8 @@ namespace StudentRewardsStore.Controllers
         }
         public IActionResult SaveNewPrize(Prize newPrize)
         {
+            newPrize.ImageWidth = 200;
+            newPrize.ImageHeight = 150;
             repo.AddPrize(newPrize);
             return RedirectToAction("Overview");
         }

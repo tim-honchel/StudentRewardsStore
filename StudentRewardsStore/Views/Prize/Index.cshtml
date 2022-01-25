@@ -11,11 +11,12 @@
     <label asp-for="PrizeName" class="control-label">Name</label>
     <input type="text" name="PrizeName" class="form-control" value="@Model.PrizeName" />
     <br>
-    <label asp-for="Description" class="control-label">Description</label>
+    <label asp-for="Description" class="control-label">Description (optional)</label>
     <input type="text" name="Description" class="form-control" value="@Model.Description" />
     <br>
-    <label asp-for="ImageLink" class="control-label">Image Link</label>
-    <input type="text" name="ImageLink" class="form-control" value="@Model.ImageLink" />
+    <label asp-for="ImageLink" class="control-label">Image Link (preview below)</label>
+    <input id="link" type="text" name="ImageLink" class="form-control" value="@Model.ImageLink" />
+    <img src=@Model.ImageLink style="width:@(Model.ImageWidth)px;height:@(Model.ImageHeight)px;">
     <br>
     <label asp-for="Price" class="control-label">Price</label>
     <input type="text" name="Price" class="form-control" value="@Model.Price" />

@@ -6,6 +6,8 @@
         public string PrizeName { get; set; }
         public string Description { get; set; }
         public string ImageLink { get; set; }
+        public int ImageWidth { get; set; }
+        public int ImageHeight { get; set; }
         public int Price { get; set; }
         public string DisplayStatus { get; set; }
         public int Inventory { get; set; }
