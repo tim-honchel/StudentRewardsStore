@@ -1,4 +1,7 @@
-﻿namespace StudentRewardsStore
+﻿using StudentRewardsStore.Models;
+using System.Collections.Generic;
+
+namespace StudentRewardsStore
 {
     public static class StoreInfo
     {
@@ -8,7 +11,10 @@
         public static string StoreStatus { get; set; }
         public static string Currency { get; set; }
 
-        static StoreInfo()
+        public static List<Prize> CurrentOrder = new List<Prize>();
+        public static string CartMessage { get; set; }
+
+    static StoreInfo()
         {
 
         }

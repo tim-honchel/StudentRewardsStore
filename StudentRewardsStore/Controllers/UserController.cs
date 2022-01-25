@@ -2,6 +2,7 @@
 using StudentRewardsStore.Models;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace StudentRewardsStore.Controllers
 {
@@ -96,9 +97,30 @@ namespace StudentRewardsStore.Controllers
                 return RedirectToAction("Login");
             }
         }
-        public IActionResult ReviewOrder(IEnumerable<Prize> orders)
+        public IActionResult AddToCart(Prize addToCart)
         {
-            return View(orders);
+            if (addToCart.Quantity > addToCart.Inventory)
+            {
+                StoreInfo.CartMessage = $"Did not add {addToCart.PrizeName} because aren't enough left in the store.";
+            }
+            else if (addToCart.Quantity * addToCart.Price > StoreInfo.Balance)
+            {
+                StoreInfo.CartMessage = $"Did not add {addToCart.PrizeName} because you don't have enough {StoreInfo.Currency}.";
+            }
+            else if (addToCart.Quantity == 0)
+            {
+                StoreInfo.CartMessage = $"Did not add {addToCart.PrizeName} because you forgot to choose a quantity.";
+            }
+            else
+            {
+                StoreInfo.CartMessage = "";
+                StoreInfo.CurrentOrder.Add(addToCart);
+            }
+            return RedirectToAction("Store");
+        }
+        public IActionResult SubmitOrder()
+        {
+            return View(StoreInfo.CurrentOrder);
         }
         public IActionResult Logout()
         {
