@@ -34,6 +34,9 @@ namespace StudentRewardsStore
         {
             _conn.Execute("UPDATE students SET StudentName = @StudentName, PIN = @PIN, Category = @Category, Balance = @Balance, Status = @Status WHERE StudentID = @StudentID;", new { StudentName = student.StudentName, PIN = student.PIN, Category = student.Category, Balance = student.Balance, Status = student.Status, StudentID = student.StudentID });
         }
-
+        public IEnumerable<Student> GetStudentIDs(int organizationID)
+        {
+            return _conn.Query<Student>("SELECT StudentID, StudentName FROM students WHERE _OrganizationID = @OrganizationID ORDER BY StudentName;", new { OrganizationID = organizationID });
+        }
     }
 }

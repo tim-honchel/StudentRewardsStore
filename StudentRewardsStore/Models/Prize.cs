@@ -1,4 +1,7 @@
-﻿namespace StudentRewardsStore.Models
+﻿using System.Collections.Generic;
+
+namespace StudentRewardsStore.Models
+
 {
     public class Prize // the prize table in the database, with all of its columns as properties
     {
@@ -14,6 +17,7 @@
         public int ValueTowardsLimit { get; set; }
         public int _OrganizationID { get; set; } // foreign key
         public int Quantity { get; set; } // for facilitating orders only
+        public List<int> QuantitySelections { get; set; } // for facilitating orders only
         public int Cost { get; set; } // for facilitating orders only
     }
 }

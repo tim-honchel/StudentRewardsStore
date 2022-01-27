@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace StudentRewardsStore.Models
  
@@ -16,5 +17,9 @@ namespace StudentRewardsStore.Models
         public string StudentName { get; set; } // for display only
         public string PrizeName { get; set; } // for display only
         public int Price { get; set; } // for display only
+
+        public List<int> QuantityDropdown { get; set; } // for display only
+        public List<int> CostDropdown { get; set; }
+        public List<string> StatusDropdown { get; set; }
     }
 }

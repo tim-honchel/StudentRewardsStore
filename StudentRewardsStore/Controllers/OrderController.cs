@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using StudentRewardsStore.Models;
+using System;
 
 namespace StudentRewardsStore.Controllers
 {
@@ -36,8 +37,15 @@ namespace StudentRewardsStore.Controllers
         }
         public IActionResult UpdateOrder(Order order)
         {
-            repo.UpdateOrder(order);
-            return RedirectToAction("Overview");
+            try
+            {
+                repo.UpdateOrder(order);
+                return RedirectToAction("Overview");
+            }
+            catch (System.Exception)
+            {
+                return RedirectToAction("Error", "Home"); // redirects if there is an error writing to the database
+            }
         }
     }
 }

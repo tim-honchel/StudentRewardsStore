@@ -21,15 +21,22 @@ namespace StudentRewardsStore.Controllers
         
         public IActionResult Overview(int id) // receives store ID
         {
-            var store = repo.OpenStore(id); // retrieves the relevant store
-            if (Authentication.AdminID == store._AdminID) // authenticates that the admin ID matches the store's admin ID
+            if (id > 0)
             {
-                Authentication.StoreID = store.OrganizationID;
-                return View(store); // the Store Overview page
+                var store = repo.OpenStore(id); // retrieves the relevant store
+                if (Authentication.AdminID == store._AdminID) // authenticates that the admin ID matches the store's admin ID
+                {
+                    Authentication.StoreID = store.OrganizationID;
+                    return View(store); // the Store Overview page
+                }
+                else
+                {
+                    return RedirectToAction("NotSignedIn", "Admin"); // displays message if authentication failed
+                }
             }
             else
             {
-                return RedirectToAction("NotSignedIn", "Admin"); // displays message if authentication failed
+                return RedirectToAction("NotSignedIn", "Admin"); // displays message if admin tried to access store dashboard prior to selecting a specific store
             }
         }
         
@@ -47,9 +54,17 @@ namespace StudentRewardsStore.Controllers
         }
         public IActionResult SaveNewStore(Organization newStore) // receives data for a new store
         {
-            repo.SaveNewStore(newStore); // adds the new store to the database
-            var refreshedStore = repo.RefreshStore(newStore); // retrieves the store with its auto-generated store ID
-            return RedirectToAction("Overview", new {id = refreshedStore.OrganizationID}); // redirects to the Store Overview page
+            try
+            {
+                newStore.StoreStatus = "closed"; // default value
+                repo.SaveNewStore(newStore); // adds the new store to the database
+                var refreshedStore = repo.RefreshStore(newStore); // retrieves the store with its auto-generated store ID
+                return RedirectToAction("Overview", new { id = refreshedStore.OrganizationID }); // redirects to the Store Overview page
+            }
+            catch (Exception)
+            {
+                return RedirectToAction("Error", "Home"); // redirects if there is an error writing to the database
+            }
         }
         public IActionResult Settings(int id) // receives store ID
         {
@@ -65,8 +80,14 @@ namespace StudentRewardsStore.Controllers
         }
         public IActionResult UpdateStore(Organization store)
         {
-            repo.UpdateStore(store);
-            return RedirectToAction("Overview", new { id = store.OrganizationID });
+            try {
+                repo.UpdateStore(store);
+                return RedirectToAction("Overview", new { id = store.OrganizationID });
+            } 
+            catch (Exception)
+            {
+                return RedirectToAction("Error", "Home"); // redirects if there is an error writing to the database
+            }
         }
     }
 }

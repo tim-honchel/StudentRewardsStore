@@ -9,6 +9,8 @@ namespace StudentRewardsStore
         public Student ViewStudent(int studentID);
         public void AddStudent(Student newStudent);
         public void UpdateStudent(Student student);
-        
+        public IEnumerable<Student> GetStudentIDs(int organizationID);
+
+
     }
 }

@@ -6,8 +6,15 @@
     {
         <input asp-for="DepositID" type="hidden" value="" />
         <br>
-        <label asp-for="_Student_ID" class="control-label">Student ID</label>
-        <input type="text" name="_Student_ID" class="form-control" value="" />
+        /*<label asp-for="_Student_ID" class="control-label">Student ID</label>
+        <input type="text" name="_Student_ID" class="form-control" value="" />*/
+        <label for="_Student_ID">Student</label>
+        <select class="form-control" name="_Student_ID" value="">
+            @foreach (var student in Model.StudentDropdown)
+            {
+                <option value="@student.StudentID">@student.StudentName (ID:@student.StudentID) </option>
+            }
+        </select>
         <br>
         <label asp-for="Date" class="control-label">Date</label>
         <input type="text" name="Date" class="form-control" value="@DateTime.Now" />

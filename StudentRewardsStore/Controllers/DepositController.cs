@@ -7,9 +7,11 @@ namespace StudentRewardsStore.Controllers
     public class DepositController : Controller
     {
         private readonly IDepositsRepository repo;
-        public DepositController(IDepositsRepository repo)
+        private readonly IStudentsRepository studentRepo;
+        public DepositController(IDepositsRepository repo, IStudentsRepository studentRepo)
         {
             this.repo = repo;
+            this.studentRepo = studentRepo;
         }
         public IActionResult Index(int id)
         {
@@ -37,14 +39,24 @@ namespace StudentRewardsStore.Controllers
         }
         public IActionResult UpdateDeposit(Deposit deposit)
         {
-            repo.UpdateDeposit(deposit);
-            return RedirectToAction("Overview");
+            try
+            {
+                repo.UpdateDeposit(deposit);
+                return RedirectToAction("Overview");
+            }
+            catch (Exception)
+            {
+                return RedirectToAction("Error", "Home"); // redirects if there is an error writing to the database
+            }
         }
-        public IActionResult RecordDeposit(Deposit deposit)
+        public IActionResult RecordDeposit()
         {
             if (Authentication.Type == "admin")
             {
-                return View();
+                var studentsForDropdownList = studentRepo.GetStudentIDs(Authentication.StoreID);
+                var dropdownList = new Deposit();
+                dropdownList.StudentDropdown = studentsForDropdownList;
+                return View(dropdownList);
             }
             else
             {
@@ -53,9 +65,24 @@ namespace StudentRewardsStore.Controllers
         }
         public IActionResult SaveNewDeposit(Deposit newDeposit)
         {
-            repo.AddDeposit(newDeposit);
+            var student = studentRepo.ViewStudent(newDeposit._Student_ID);
+            if (student._OrganizationID == Authentication.StoreID) // validates the student is in the organization
+            {
+                try
+                {
+                    repo.AddDeposit(newDeposit);
+                    return RedirectToAction("Overview");
+                }
+                catch (Exception)
+                {
+                    return RedirectToAction("Error", "Home"); // redirects if there is an error writing to the database
+                }
+            }
+            else
+            {
+                return RedirectToAction("Error", "Home"); // redirects if the user attempts to deposit funds for a student who is not in their organization
+            }
             
-            return RedirectToAction("Overview");
         }
     }
 }

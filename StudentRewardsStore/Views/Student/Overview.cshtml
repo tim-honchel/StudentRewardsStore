@@ -2,29 +2,33 @@
 
 @*Displays students with links to edit or add new*@
 
-<h2>List of Students</h2>
-<p>Select a student to edit information:</p>
+<div class="secondary-page">
+
+    <h2>List of Students</h2>
+    <p>Select a student to edit information:</p>
 
 
-<table class="table">
-    <tr>
-        <th>Student ID</th>
-        <th>Student Name</th>
-        <th>Balance</th>
-        <th>Category</th>
-        <th>Status</th>
-    </tr>
-
-    @foreach (var student in Model) // displays each student associated with the store, with a link to that student
-    {
+    <table class="table">
         <tr>
-            <td>@student.StudentID</td>
-            <td><a href="/Student/Index/@student.StudentID">@student.StudentName</a></td>
-            <td>@student.Balance</td>
-            <td>@student.Category</td>
-            <td>@student.Status</td>
+            <th>Student ID</th>
+            <th>Student Name</th>
+            <th>Balance</th>
+            <th>Category</th>
+            <th>Status</th>
         </tr>
-    }
 
-</table>
-<a asp-area="" asp-controller="Student" asp-action="AddStudent">Add a New Student</a>
+        @foreach (var student in Model) // displays each student associated with the store, with a link to that student
+        {
+            <tr>
+                <td>@student.StudentID</td>
+                <td><a href="/Student/Index/@student.StudentID">@student.StudentName</a></td>
+                <td>@student.Balance</td>
+                <td>@student.Category</td>
+                <td>@student.Status</td>
+            </tr>
+        }
+
+    </table>
+    <a asp-area="" asp-controller="Student" asp-action="AddStudent">Add a New Student</a>
+
+</div>

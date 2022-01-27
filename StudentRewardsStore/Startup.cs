@@ -28,8 +28,8 @@ namespace StudentRewardsStore
             services.AddScoped<IDbConnection>((s) =>
             {
 
-                    //IDbConnection conn = new MySqlConnection(Configuration.GetConnectionString("azure"));
-                    IDbConnection conn = new MySqlConnection(Configuration.GetConnectionString("localhost"));
+                    IDbConnection conn = new MySqlConnection(Configuration.GetConnectionString("azure"));
+                    //IDbConnection conn = new MySqlConnection(Configuration.GetConnectionString("localhost"));
                     conn.Open();
                     return conn;
 

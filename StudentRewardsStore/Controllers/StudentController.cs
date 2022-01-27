@@ -50,13 +50,27 @@ namespace StudentRewardsStore.Controllers
         }
         public IActionResult SaveNewStudent(Student newStudent)
         {
-            repo.AddStudent(newStudent);
-            return RedirectToAction("Overview");
+            try
+            {
+                repo.AddStudent(newStudent);
+                return RedirectToAction("Overview");
+            }
+            catch (Exception)
+            {
+                return RedirectToAction("Error", "Home"); // redirects if there is an error writing to the database
+            }
         }
         public IActionResult UpdateStudent(Student student)
         {
-            repo.UpdateStudent(student);
-            return RedirectToAction("Overview");
+            try
+            {
+                repo.UpdateStudent(student);
+                return RedirectToAction("Overview");
+            }
+            catch (Exception)
+            {
+                return RedirectToAction("Error", "Home"); // redirects if there is an error writing to the database
+            }
         }
     }
 }

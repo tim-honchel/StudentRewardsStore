@@ -96,6 +96,14 @@ namespace StudentRewardsStore.Controllers
                 StoreInfo.StoreStatus = store.StoreStatus;
                 StoreInfo.Currency = store.CurrencyName;
                 var prizes = prizeRepo.ShowAvailablePrizes(Authentication.StoreID);
+                foreach (Prize item in prizes)
+                {
+                    item.QuantitySelections = new List<int> { };
+                    for (int num = 0; num <= item.Inventory; num++)
+                    {
+                        item.QuantitySelections.Add(num);
+                    }
+                }
                 return View(prizes);
             }
             else

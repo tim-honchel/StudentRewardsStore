@@ -48,17 +48,31 @@ namespace StudentRewardsStore.Controllers
         }
         public IActionResult SaveNewPrize(Prize newPrize)
         {
-            newPrize.ImageWidth = 150;
-            newPrize.ImageHeight = 150;
-            repo.AddPrize(newPrize);
-            return RedirectToAction("Overview");
+            try
+            {
+                newPrize.ImageWidth = 150;
+                newPrize.ImageHeight = 150;
+                repo.AddPrize(newPrize);
+                return RedirectToAction("Overview");
+            }
+            catch (Exception)
+            {
+                return RedirectToAction("Error", "Home"); // redirects if there is an error writing to the database
+            }
         }
         public IActionResult UpdatePrize(Prize prize)
         {
-            prize.ImageWidth = 150;
-            prize.ImageHeight = 150;
-            repo.UpdatePrize(prize);
-            return RedirectToAction("Overview");
+            try
+            {
+                prize.ImageWidth = 150;
+                prize.ImageHeight = 150;
+                repo.UpdatePrize(prize);
+                return RedirectToAction("Overview");
+            }
+            catch (Exception)
+            {
+                return RedirectToAction("Error", "Home"); // redirects if there is an error writing to the database
+            }
         }
     }
 }

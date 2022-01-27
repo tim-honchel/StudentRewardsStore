@@ -2,30 +2,31 @@
 
 @*Inputs information to add a new student record*@
 
-<h2>Add a Student Account</h2>
-<p>Enter the information and click "Create".</p>
-@using (Html.BeginForm("SaveNewStudent", "Student", "Post")) // posts values to Student controller, SaveNewStudent action
-{
-    <input asp-for="StudentID" type="hidden" value="" />
-    <br>
-    <label asp-for="StudentName" class="control-label">Name</label>
-    <input type="text" name="StudentName" class="form-control" value="" />
-    <br>
-    <label asp-for="PIN" class="control-label">PIN</label>
-    <input type="text" name="PIN" class="form-control" value="" />
-    <br>
-    <label asp-for="Category" class="control-label">Category</label>
-    <input type="text" name="Category" class="form-control" value="" />
-    <br>
-    <label asp-for="Balance" class="control-label">Balance</label>
-    <input type="text" name="Balance" class="form-control" value="" />
-    <br>
-    <label asp-for="Status" class="control-label">Status (active or inactive)</label>
-    <input type="text" name="Status" class="form-control" value="" />
-    <br>
-    <input asp-for="_OrganizationID" type="hidden" value="@Authentication.StoreID" />
-    <input type="submit" value="Add" class="btn btn-primary" />
-}
-<br>
+    <div class="secondary-page">
+    <h2>Add a Student Account</h2>
+    <p>Enter the information and click "Create".</p>
+    @using (Html.BeginForm("SaveNewStudent", "Student", "Post")) // posts values to Student controller, SaveNewStudent action
+    {
+        <input asp-for="StudentID" type="hidden" value="" />
+        <br>
+        <label asp-for="StudentName" class="control-label">Name</label>
+        <input type="text" name="StudentName" class="form-control" value="" />
+        <br>
+        <label asp-for="PIN" class="control-label">PIN</label>
+        <input type="text" name="PIN" class="form-control" value="" />
+        <br>
+        <label asp-for="Category" class="control-label">Category</label>
+        <input type="text" name="Category" class="form-control" value="" />
+        <br>
+        <label asp-for="Balance" class="control-label">Balance</label>
+        <input type="text" name="Balance" class="form-control" value="" />
+        <br>
+        <label asp-for="Status" class="control-label">Status (active or inactive)</label>
+        <input type="text" name="Status" class="form-control" value="" />
+        <br>
+        <input asp-for="_OrganizationID" type="hidden" value="@Authentication.StoreID" />
+        <input type="submit" value="Add" class="btn btn-primary" />
+    }
+</div>
 
 

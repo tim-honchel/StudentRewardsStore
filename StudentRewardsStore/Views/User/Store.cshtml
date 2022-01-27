@@ -72,11 +72,17 @@
                 <td><img id="prize-photo" src = "@prize.ImageLink" style ="width:@(prize.ImageWidth)px;height:@(prize.ImageHeight)px;"></td>
                 <td><input type="hidden" name="PrizeName" value="@prize.PrizeName"/>@prize.PrizeName</td>
                 <td>@prize.Description</td>
-                <td><input type="hidden" name="Price" value="@prize.Price" />@prize.Price</td>
-                <td><input type="hidden" name="Inventory" value="@prize.Inventory" />@prize.Inventory</td>
+                <td><input type="hidden" name="Price" value="@prize.Price" />$ @prize.Price</td>
+                <td><input type="hidden" name="Inventory" value="@prize.Inventory" />@prize.Inventory left</td>
                 @if (StoreInfo.StoreStatus == "open")
                 {
-                <td><input type="text" name="Quantity" class="form-control" value="0" /></td>
+                /*<td><input type="text" name="Quantity" class="form-control" value="0" /></td>*/
+                <td><select class="form-control" name="Quantity" value="">
+                    @foreach (int num in prize.QuantitySelections)
+                    {
+                        <option value="@num">@num</option>
+                    }
+                </select></td>
                 <td><input type="submit" value="Add to Cart" class="btn btn-primary" /></td>
                 }
             </tr>

@@ -53,8 +53,15 @@ namespace StudentRewardsStore.Controllers
 
         public IActionResult RegisterAdmin(Admin admin) // receives data for a new admin
         {
-            repo.RegisterAdmin(admin); // encrypts the password and adds new admin record to database
-            return RedirectToAction("Login"); // return to the login page
+            try
+            {
+                repo.RegisterAdmin(admin); // encrypts the password and adds new admin record to database
+                return RedirectToAction("Login"); // return to the login page
+            }
+            catch (Exception)
+            {
+                return RedirectToAction("Error", "Home"); // redirects if there is an error writing to the database
+            }
         }
         public IActionResult InvalidCredentials() // redirected when the email and/or password do not match the database
         {
