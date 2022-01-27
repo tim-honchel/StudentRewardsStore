@@ -20,7 +20,13 @@
         <input type="text" name="Date" class="form-control" value="@DateTime.Now" />
         <br>
         <label asp-for="Amount" class="control-label">Amount</label>
-        <input type="text" name="Amount" class="form-control" value="0" />
+        //<input type="text" name="Amount" class="form-control" value="0" />
+        <select class="form-control" name="Amount" value="">
+            @foreach (int num in Model.AmountDropdown)
+            {
+                 <option value="@num">@num</option>
+            }
+        </select>
         <br>
         <input asp-for="_Organization_ID" type="hidden" value="@Authentication.StoreID" />
         <input type="submit" value="Record" class="btn btn-primary" />

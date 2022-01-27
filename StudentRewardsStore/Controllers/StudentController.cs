@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using System;
 using StudentRewardsStore.Models;
+using System.Collections.Generic;
 
 namespace StudentRewardsStore.Controllers
 {
@@ -15,6 +16,7 @@ namespace StudentRewardsStore.Controllers
         public IActionResult Index(int id)
         {
             var student = repo.ViewStudent(id);
+            student.StatusDropdown = new List<string>() { "active", "inactive" };
             if (Authentication.StoreID == student._OrganizationID)
             {
                 return View(student);
@@ -41,7 +43,9 @@ namespace StudentRewardsStore.Controllers
         {
             if (Authentication.Type == "admin" && Authentication.StoreID > 0)
             {
-                return View();
+                var student = new Student();
+                student.StatusDropdown = new List<string>() { "active", "inactive" };
+                return View(student);
             }
             else
             {

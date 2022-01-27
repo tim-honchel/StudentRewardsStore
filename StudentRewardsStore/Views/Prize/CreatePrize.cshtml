@@ -18,13 +18,31 @@
         <input type="text" name="ImageLink" class="form-control" value="" />
         <br>
         <label asp-for="Price" class="control-label">Price</label>
-        <input type="text" name="Price" class="form-control" value="" />
+        //<input type="text" name="Price" class="form-control" value="" />
+        <select class="form-control" name="Price" value="">
+            @foreach (int num in Model.PriceDropdown)
+            {
+                 <option value="@num">@num</option>
+            }
+        </select>
         <br>
         <label asp-for="DisplayStatus" class="control-label">Show or Hide in Store</label>
-        <input type="text" name="DisplayStatus" class="form-control" value="" />
+        //<input type="text" name="DisplayStatus" class="form-control" value="" />
+        <select class="form-control" name="DisplayStatus" value="">
+            @foreach (var status in Model.StatusDropdown)
+            {
+       	        <option value="@status">@status</option>
+            }
+            </select>
         <br>
         <label asp-for="Inventory" class="control-label">Current Inventory Count</label>
-        <input type="text" name="Inventory" class="form-control" value="" />
+        //<input type="text" name="Inventory" class="form-control" value="" />
+        <select class="form-control" name="Inventory" value="">
+            @foreach (int num in Model.InventoryDropdown)
+            {
+                 <option value="@num">@num</option>
+            }
+        </select>
         <br>
         <input asp-for="_OrganizationID" type="hidden" value="@Authentication.StoreID" />
         <input type="submit" value="Create" class="btn btn-primary" />

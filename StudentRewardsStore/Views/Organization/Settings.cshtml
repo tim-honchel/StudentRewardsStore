@@ -19,7 +19,15 @@
     
         <label asp-for="StoreStatus" class="control-label">Store Status</label>
         <p><em>(open or closed)</em></p>
-        <input type="text" name="StoreStatus" class="form-control" value="@Model.StoreStatus" />
+        //<input type="text" name="StoreStatus" class="form-control" value="@Model.StoreStatus" />
+        <select class="form-control" name="StoreStatus" value="@Model.StoreStatus">
+            <option value="@Model.StoreStatus">@Model.StoreStatus</option>
+            @foreach (var status in Model.StatusDropdown)
+            {
+       	        <option value="@status">@status</option>
+            }
+            </select>
+
         <br>
 
     @*    <label asp-for="WeeklyLimit" class="control-label">Weekly Limit on Select Items</label>

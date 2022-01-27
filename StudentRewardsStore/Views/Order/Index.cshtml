@@ -7,13 +7,34 @@
         <input asp-for="OrderID" type="hidden" value="@Model.OrderID" />
         <br>
         <label asp-for="Quantity" class="control-label">Quantity</label>
-        <input type="text" name="Quantity" class="form-control" value="@Model.Quantity" />
+        //<input type="text" name="Quantity" class="form-control" value="@Model.Quantity" />
+        <select class="form-control" name="Quantity" value="@Model.Quantity">
+            <option value="@Model.Quantity">@Model.Quantity</option>
+            @foreach (int num in Model.QuantityDropdown)
+            {
+                 <option value="@num">@num</option>
+            }
+        </select>
         <br>
         <label asp-for="Cost" class="control-label">Cost</label>
-        <input type="text" name="Cost" class="form-control" value="@Model.Cost" />
+        //<input type="text" name="Cost" class="form-control" value="@Model.Cost" />
+        <select class="form-control" name="Cost" value="@Model.Cost">
+            <option value="@Model.Cost">@Model.Cost</option>
+            @foreach (int num in Model.CostDropdown)
+            {
+                 <option value="@num">@num</option>
+            }
+        </select>
         <br>
         <label asp-for="FulfillmentStatus" class="control-label">Status</label>
-        <input type="text" name="FulfillmentStatus" class="form-control" value="@Model.FulfillmentStatus" />
+        //<input type="text" name="FulfillmentStatus" class="form-control" value="@Model.FulfillmentStatus" />
+        <select class="form-control" name="FulfillmentStatus" value="@Model.FulfillmentStatus">
+            <option value="@Model.FulfillmentStatus">@Model.FulfillmentStatus</option>
+            @foreach (var status in Model.StatusDropdown)
+            {
+       	        <option value="@status">@status</option>
+            }
+            </select>
         <br>
         <input type="submit" value="Update" class="btn btn-primary" />
     }

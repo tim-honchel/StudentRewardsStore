@@ -2,6 +2,7 @@
 using StudentRewardsStore.Models;
 using System.Linq;
 using System;
+using System.Collections.Generic;
 
 namespace StudentRewardsStore.Controllers
 {
@@ -71,6 +72,7 @@ namespace StudentRewardsStore.Controllers
             if (Authentication.StoreID == id)
             {
                 var store = repo.OpenStore(id);
+                store.StatusDropdown = new List<string>() { "closed", "open" };
                 return View(store); ;
             }
             else

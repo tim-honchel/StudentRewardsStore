@@ -19,11 +19,15 @@
         <label asp-for="Category" class="control-label">Category</label>
         <input type="text" name="Category" class="form-control" value="@Model.Category" />
         <br>
-        <label asp-for="Balance" class="control-label">Balance</label>
-        <input type="text" name="Balance" class="form-control" value="@Model.Balance" />
-        <br>
         <label asp-for="Status" class="control-label">Status</label>
-        <input type="text" name="Status" class="form-control" value="@Model.Status" />
+        //<input type="text" name="Status" class="form-control" value="@Model.Status" />
+        <select class="form-control" name="Status" value="@Model.Status">
+            <option value="@Model.Status">@Model.Status</option>
+            @foreach (var status in Model.StatusDropdown)
+            {
+       	        <option value="@status">@status</option>
+            }
+            </select>
         <br>
         <input type="submit" value="Update" class="btn btn-primary" />
 

@@ -10,7 +10,14 @@
         <input type="text" name="Date" class="form-control" value="@Model.Date" />
         <br>
         <label asp-for="Amount" class="control-label">Amount</label>
-        <input type="text" name="Amount" class="form-control" value="@Model.Amount" />
+        //<input type="text" name="Amount" class="form-control" value="@Model.Amount" />
+        <select class="form-control" name="Amount" value="@Model.Amount">
+            <option value="@Model.Amount">@Model.Amount</option>
+            @foreach (int num in Model.AmountDropdown)
+            {
+                 <option value="@num">@num</option>
+            }
+        </select>
         <br>
         <input asp-for="_Student_ID" type="hidden" value="@Model._Student_ID" />
         <input type="submit" value="Update" class="btn btn-primary" />

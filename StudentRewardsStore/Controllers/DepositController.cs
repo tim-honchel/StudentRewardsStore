@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using System;
 using StudentRewardsStore.Models;
+using System.Collections.Generic;
 
 namespace StudentRewardsStore.Controllers
 {
@@ -18,6 +19,15 @@ namespace StudentRewardsStore.Controllers
             var deposit = repo.ViewDeposit(id); // retrieves the relevant deposit
             if (Authentication.StoreID == deposit._Organization_ID)
             {
+                deposit.AmountDropdown = new List<int>();
+                for (int i = 0; i <= 100; i++)
+                {
+                    deposit.AmountDropdown.Add(i);
+                }
+                for (int i = -1; i>=-100; i--)
+                {
+                    deposit.AmountDropdown.Add(i);
+                }
                 return View(deposit); // the specific deposit page
             }
             else
@@ -54,9 +64,18 @@ namespace StudentRewardsStore.Controllers
             if (Authentication.Type == "admin")
             {
                 var studentsForDropdownList = studentRepo.GetStudentIDs(Authentication.StoreID);
-                var dropdownList = new Deposit();
-                dropdownList.StudentDropdown = studentsForDropdownList;
-                return View(dropdownList);
+                var deposit = new Deposit();
+                deposit.StudentDropdown = studentsForDropdownList;
+                deposit.AmountDropdown = new List<int>();
+                for (int i = 0; i <= 100; i++)
+                {
+                    deposit.AmountDropdown.Add(i);
+                }
+                for (int i = -1; i >= -100; i--)
+                {
+                    deposit.AmountDropdown.Add(i);
+                }
+                return View(deposit);
             }
             else
             {

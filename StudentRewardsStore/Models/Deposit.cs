@@ -13,6 +13,7 @@ namespace StudentRewardsStore.Models
         public int _Organization_ID { get; set; }
         public string StudentName { get; set; } // for display only
         public IEnumerable<Student> StudentDropdown { get; set; } // for display only
+        public List<int> AmountDropdown { get; set; } // for display only
         
     }
 }

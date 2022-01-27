@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using System;
 using StudentRewardsStore.Models;
+using System.Collections.Generic;
 
 namespace StudentRewardsStore.Controllers
 {
@@ -16,6 +17,17 @@ namespace StudentRewardsStore.Controllers
             var prize = repo.ViewPrize(id); // retrieves the relevant prize
             if (Authentication.StoreID == prize._OrganizationID)
             {
+                prize.StatusDropdown = new List<string>() { "show", "hide" };
+                prize.PriceDropdown = new List<int>();
+                for (int i = 0; i <= 1000; i++)
+                {
+                    prize.PriceDropdown.Add(i);
+                }
+                prize.InventoryDropdown = new List<int>();
+                for (int i = 0; i <= 500; i++)
+                {
+                    prize.InventoryDropdown.Add(i);
+                }
                 return View(prize); // the specific prize page
             }
             else
@@ -39,7 +51,19 @@ namespace StudentRewardsStore.Controllers
         {
             if (Authentication.Type == "admin")
             {
-                return View();
+                var prize = new Prize();
+                prize.StatusDropdown = new List<string>() { "show", "hide" };
+                prize.PriceDropdown = new List<int>();
+                for (int i = 0; i <= 1000; i++)
+                {
+                    prize.PriceDropdown.Add(i);
+                }
+                prize.InventoryDropdown = new List<int>();
+                for (int i = 0; i <= 500; i++)
+                {
+                    prize.InventoryDropdown.Add(i);
+                }
+                return View(prize);
             }
             else
             {

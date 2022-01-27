@@ -1,4 +1,7 @@
-﻿namespace StudentRewardsStore.Models
+﻿using System.Collections.Generic;
+
+namespace StudentRewardsStore.Models
+
 {
     public class Organization // the organization table in the database, with all of its columns as properties
     {
@@ -14,6 +17,7 @@
         public int OpenTime { get; set; }
         public int WeeklyLimit { get; set; }
         public int _AdminID { get; set; } // foreign key
+        public List<string> StatusDropdown { get; set; } // for display only
 
 
     }

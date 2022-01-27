@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using StudentRewardsStore.Models;
 using System;
+using System.Collections.Generic;
 
 namespace StudentRewardsStore.Controllers
 {
@@ -16,7 +17,18 @@ namespace StudentRewardsStore.Controllers
             var order = repo.ViewOrder(id); // retrieves the relevant order
             if (Authentication.StoreID == order._Organization_ID_)
             {
-                return View(order); // the specific prize page
+                order.StatusDropdown = new List<string>() { "unfulfilled", "fulfilled", "canceled" };
+                order.CostDropdown = new List<int>();
+                for (int i = 0; i <= 1000; i++)
+                {
+                    order.CostDropdown.Add(i);
+                }
+                order.QuantityDropdown = new List<int>();
+                for (int i = 0; i <= 50; i++)
+                {
+                    order.QuantityDropdown.Add(i);
+                }
+                return View(order); // the specific order page
             }
             else
             {

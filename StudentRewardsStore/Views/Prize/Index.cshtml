@@ -19,13 +19,34 @@
         <img src=@Model.ImageLink style="width:@(Model.ImageWidth)px;height:@(Model.ImageHeight)px;">
         <br>
         <label asp-for="Price" class="control-label">Price</label>
-        <input type="text" name="Price" class="form-control" value="@Model.Price" />
+        //<input type="text" name="Price" class="form-control" value="@Model.Price" />
+        <select class="form-control" name="Price" value="@Model.Price">
+            <option value="@Model.Price">@Model.Price</option>
+            @foreach (int num in Model.PriceDropdown)
+            {
+                 <option value="@num">@num</option>
+            }
+        </select>
         <br>
         <label asp-for="DisplayStatus" class="control-label">Show or Hide in Store</label>
-        <input type="text" name="DisplayStatus" class="form-control" value="@Model.DisplayStatus" />
+        //<input type="text" name="DisplayStatus" class="form-control" value="@Model.DisplayStatus" />
+        <select class="form-control" name="DisplayStatus" value="@Model.DisplayStatus">
+            <option value="@Model.DisplayStatus">@Model.DisplayStatus</option>
+            @foreach (var status in Model.StatusDropdown)
+            {
+       	        <option value="@status">@status</option>
+            }
+            </select>
         <br>
         <label asp-for="Inventory" class="control-label">Current Inventory Count</label>
-        <input type="text" name="Inventory" class="form-control" value="@Model.Inventory" />
+        //<input type="text" name="Inventory" class="form-control" value="@Model.Inventory" />
+        <select class="form-control" name="Inventory" value="@Model.Inventory">
+            <option value="@Model.Inventory">@Model.Inventory</option>
+            @foreach (int num in Model.InventoryDropdown)
+            {
+                 <option value="@num">@num</option>
+            }
+        </select>
         <br>
         <input type="submit" value="Update" class="btn btn-primary" />
     }

@@ -19,5 +19,8 @@ namespace StudentRewardsStore.Models
         public int Quantity { get; set; } // for facilitating orders only
         public List<int> QuantitySelections { get; set; } // for facilitating orders only
         public int Cost { get; set; } // for facilitating orders only
+        public List<int> PriceDropdown { get; set; } // for facilitating orders only
+        public List<string> StatusDropdown { get; set; } // for facilitating orders only
+        public List<int> InventoryDropdown { get; set; } // for facilitating orders only
     }
 }
