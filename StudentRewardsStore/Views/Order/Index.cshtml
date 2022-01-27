@@ -1,19 +1,20 @@
 ﻿@model Order
-
-<h2>Order of @Model.PrizeName for @Model.StudentName on @Model.OrderDate)</h2>
-<p>Modify the order information, then click "Update."</p>
-@using (Html.BeginForm("UpdateOrder", "Order", "Post"))
-{
-    <input asp-for="OrderID" type="hidden" value="@Model.OrderID" />
-    <br>
-    <label asp-for="Quantity" class="control-label">Quantity</label>
-    <input type="text" name="Quantity" class="form-control" value="@Model.Quantity" />
-    <br>
-    <label asp-for="Cost" class="control-label">Cost</label>
-    <input type="text" name="Cost" class="form-control" value="@Model.Cost" />
-    <br>
-    <label asp-for="FulfillmentStatus" class="control-label">Status</label>
-    <input type="text" name="FulfillmentStatus" class="form-control" value="@Model.FulfillmentStatus" />
-    <br>
-    <input type="submit" value="Update" class="btn btn-primary" />
-}
+<div class="secondary-page">
+    <h2>Order of @Model.PrizeName for @Model.StudentName on @Model.OrderDate)</h2>
+    <p>Modify the order information, then click "Update."</p>
+    @using (Html.BeginForm("UpdateOrder", "Order", "Post"))
+    {
+        <input asp-for="OrderID" type="hidden" value="@Model.OrderID" />
+        <br>
+        <label asp-for="Quantity" class="control-label">Quantity</label>
+        <input type="text" name="Quantity" class="form-control" value="@Model.Quantity" />
+        <br>
+        <label asp-for="Cost" class="control-label">Cost</label>
+        <input type="text" name="Cost" class="form-control" value="@Model.Cost" />
+        <br>
+        <label asp-for="FulfillmentStatus" class="control-label">Status</label>
+        <input type="text" name="FulfillmentStatus" class="form-control" value="@Model.FulfillmentStatus" />
+        <br>
+        <input type="submit" value="Update" class="btn btn-primary" />
+    }
+</div>

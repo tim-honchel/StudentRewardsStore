@@ -1,32 +1,33 @@
 ﻿@model IEnumerable<Order>
+<div class="secondary-page">
+    <h2>List of Orders</h2>
+    <p>Select an order to edit or mark as fulfilled:</p>
 
-<h2>List of Orders</h2>
-<p>Select an order to edit or mark as fulfilled:</p>
 
-
-<table class="table">
-    <tr>
-        
-        <th>Order #</th>
-        <th>Student Name</th>
-        <th>Item</th>
-        <th>Quantity</th>
-        <th>Cost</th>
-        <th>Order Date</th>
-        <th>Status</th>
-    </tr>
-
-    @foreach (var order in Model) // displays each order associated with the store, with a link to that order
-    {
+    <table class="table">
         <tr>
-            <td><a href="/Order/Index/@order.OrderID">@order.OrderID</a></td>
-            <td>@order.StudentName</td>
-            <td>@order.PrizeName</td>
-            <td>@order.Quantity</td>
-            <td>@order.Cost</td>
-            <td>@order.OrderDate</td>
-            <td>@order.FulfillmentStatus</td>
+        
+            <th>Order #</th>
+            <th>Student Name</th>
+            <th>Item</th>
+            <th>Quantity</th>
+            <th>Cost</th>
+            <th>Order Date</th>
+            <th>Status</th>
         </tr>
-    }
 
-</table>
+        @foreach (var order in Model) // displays each order associated with the store, with a link to that order
+        {
+            <tr>
+                <td><a href="/Order/Index/@order.OrderID">@order.OrderID</a></td>
+                <td>@order.StudentName</td>
+                <td>@order.PrizeName</td>
+                <td>@order.Quantity</td>
+                <td>@order.Cost</td>
+                <td>@order.OrderDate</td>
+                <td>@order.FulfillmentStatus</td>
+            </tr>
+        }
+
+    </table>
+</div>

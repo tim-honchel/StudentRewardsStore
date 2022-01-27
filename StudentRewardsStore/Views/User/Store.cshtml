@@ -1,85 +1,86 @@
 ﻿@model IEnumerable<Prize>
-<h2>@StoreInfo.StoreName</h2>
-<p>@StoreInfo.StudentName, you have @StoreInfo.Balance @StoreInfo.Currency. The store is @StoreInfo.StoreStatus.</p>
-<br>
-@if (StoreInfo.StoreStatus == "open")
-{
-    <h4>Your Shopping Cart:</h4>    
-    <p>@StoreInfo.CartMessage</p>
-    @if (StoreInfo.CurrentOrder.Sum(x => x.Quantity) > 0)
+<div class="secondary-page">
+    <h2>@StoreInfo.StoreName</h2>
+    <p>@StoreInfo.StudentName, you have @StoreInfo.Balance @StoreInfo.Currency. The store is @StoreInfo.StoreStatus.</p>
+    <br>
+    @if (StoreInfo.StoreStatus == "open")
     {
-        <table class="table">
-            <tr>
-                <th>Item</th>
-                <th>Order Quantity</th>
-                <th>@StoreInfo.Currency</th>
-                <th>Total Cost</th>
+        <h4>Your Shopping Cart:</h4>    
+        <p>@StoreInfo.CartMessage</p>
+        @if (StoreInfo.CurrentOrder.Sum(x => x.Quantity) > 0)
+        {
+            <table class="table">
+                <tr>
+                    <th>Item</th>
+                    <th>Order Quantity</th>
+                    <th>@StoreInfo.Currency</th>
+                    <th>Total Cost</th>
             
 
-            </tr>
-
-            @foreach (var prize in StoreInfo.CurrentOrder)
-            {
-                <tr>
-                    <td>@prize.PrizeName</td>
-                    <td>@prize.Quantity</td>
-                    <td>@prize.Price</td>
-                    <td>@(prize.Quantity * prize.Price)</td>
-                    
                 </tr>
+
+                @foreach (var prize in StoreInfo.CurrentOrder)
+                {
+                    <tr>
+                        <td>@prize.PrizeName</td>
+                        <td>@prize.Quantity</td>
+                        <td>@prize.Price</td>
+                        <td>@(prize.Quantity * prize.Price)</td>
+                    
+                    </tr>
+                }
+            </table>
+            <br>
+            <p>This order would cost @(StoreInfo.CurrentOrder.Sum(x=>x.Cost)) @StoreInfo.Currency. You would have @(StoreInfo.Balance - StoreInfo.CurrentOrder.Sum(x=>x.Cost)) @StoreInfo.Currency left.</p>
+            @using (Html.BeginForm("SubmitOrder", "User", "Post"))
+            {
+                <button>Submit Your Order</button>
             }
-        </table>
+            @* <a asp-area="" asp-controller="User" asp-action="SubmitOrder">Submit Your Order</a>*@
+        }
+        @if (StoreInfo.CurrentOrder.Sum(x => x.Quantity)== 0)
+        {
+            <p>Cart is empty.</p>
+        }
         <br>
-        <p>This order would cost @(StoreInfo.CurrentOrder.Sum(x=>x.Cost)) @StoreInfo.Currency. You would have @(StoreInfo.Balance - StoreInfo.CurrentOrder.Sum(x=>x.Cost)) @StoreInfo.Currency left.</p>
-        @using (Html.BeginForm("SubmitOrder", "User", "Post"))
-        {
-            <button>Submit Your Order</button>
-        }
-        @* <a asp-area="" asp-controller="User" asp-action="SubmitOrder">Submit Your Order</a>*@
+        <br>
     }
-    @if (StoreInfo.CurrentOrder.Sum(x => x.Quantity)== 0)
-    {
-        <p>Cart is empty.</p>
-    }
-    <br>
-    <br>
-}
 
- <h4>Prizes For Sale:</h4> 
- <br>
+     <h4>Prizes For Sale:</h4> 
+     <br>
 
-<table class="table">
-    <tr>
-        <th>Image</th>
-        <th>Item</th>
-        <th>Description</th>
-        <th>@StoreInfo.Currency</th>
-        <th>How Many Left</th>
-        @if (StoreInfo.StoreStatus == "open")
-        {
-            <th>Order Quantity</th>
-            <th></th>
-        }
-    </tr>
-
-    @foreach (var prize in Model)
-    {
-        @using (Html.BeginForm("AddToCart", "User", "Post"))
-        {
-            <tr>
-                <input type="hidden" name="PrizeID" value="@prize.PrizeID"/>
-            <td><img id="prize-photo" src = "@prize.ImageLink" style ="width:@(prize.ImageWidth)px;height:@(prize.ImageHeight)px"></td>
-            <td><input type="hidden" name="PrizeName" value="@prize.PrizeName"/>@prize.PrizeName</td>
-            <td>@prize.Description</td>
-            <td><input type="hidden" name="Price" value="@prize.Price" />@prize.Price</td>
-            <td><input type="hidden" name="Inventory" value="@prize.Inventory" />@prize.Inventory</td>
+    <table class="table">
+        <tr>
+            <th>Image</th>
+            <th>Item</th>
+            <th>Description</th>
+            <th>@StoreInfo.Currency</th>
+            <th>How Many Left</th>
             @if (StoreInfo.StoreStatus == "open")
             {
-            <td><input type="text" name="Quantity" class="form-control" value="0" /></td>
-            <td><input type="submit" value="Add to Cart" class="btn btn-primary" /></td>
+                <th>Order Quantity</th>
+                <th></th>
             }
         </tr>
-        }
-    }
 
+        @foreach (var prize in Model)
+        {
+            @using (Html.BeginForm("AddToCart", "User", "Post"))
+            {
+                <tr>
+                    <input type="hidden" name="PrizeID" value="@prize.PrizeID"/>
+                <td><img id="prize-photo" src = "@prize.ImageLink" style ="width:@(prize.ImageWidth)px;height:@(prize.ImageHeight)px;"></td>
+                <td><input type="hidden" name="PrizeName" value="@prize.PrizeName"/>@prize.PrizeName</td>
+                <td>@prize.Description</td>
+                <td><input type="hidden" name="Price" value="@prize.Price" />@prize.Price</td>
+                <td><input type="hidden" name="Inventory" value="@prize.Inventory" />@prize.Inventory</td>
+                @if (StoreInfo.StoreStatus == "open")
+                {
+                <td><input type="text" name="Quantity" class="form-control" value="0" /></td>
+                <td><input type="submit" value="Add to Cart" class="btn btn-primary" /></td>
+                }
+            </tr>
+            }
+        }
+</div>
 

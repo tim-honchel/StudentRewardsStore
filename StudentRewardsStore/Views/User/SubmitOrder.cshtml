@@ -1,31 +1,33 @@
 ﻿@model IEnumerable<Order>
-<h2>Order Placed for @StoreInfo.StudentName!</h2>
-<p>@DateTime.Now</p>
+<div class="secondary-page">
+    <h2>Order Placed for @StoreInfo.StudentName!</h2>
+    <p>@DateTime.Now</p>
 
 
 
 
-<table class="table">
-    <tr>
-        <th>Item</th>
-        <th>Quantity</th>
-        <th>Price</th>
-        <th>Cost</th>
-    </tr>
-
-    @foreach (var order in Model) // displays each prize associated with the store, with a link to that prize
-    {
+    <table class="table">
         <tr>
-            <td>@order.PrizeName</td>
-            <td>@order.Quantity</td>
-            <td>@order.Price</td>
-            <td>@order.Cost</td>
+            <th>Item</th>
+            <th>Quantity</th>
+            <th>Price</th>
+            <th>Cost</th>
         </tr>
-    }
 
-</table>
-<br>
-<p>Total Cost: @Model.Sum(x=>x.Cost)</p>
+        @foreach (var order in Model) // displays each prize associated with the store, with a link to that prize
+        {
+            <tr>
+                <td>@order.PrizeName</td>
+                <td>@order.Quantity</td>
+                <td>@order.Price</td>
+                <td>@order.Cost</td>
+            </tr>
+        }
+
+    </table>
+    <br>
+    <p>Total Cost: @Model.Sum(x=>x.Cost)</p>
+</div>
 
     
 

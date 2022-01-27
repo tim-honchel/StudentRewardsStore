@@ -2,28 +2,31 @@
 
 @*Displays prizes with links to edit or create new*@
 
-<h2>List of Prizes</h2>
-<p>Select a prize to modify:</p>
+<div class="secondary-page">
+    <h2>List of Prizes</h2>
+    <p>Select a prize to modify:</p>
 
 
-<table class="table">
-    <tr>
-        <th>Prize Name</th>
-        <th>Price</th>
-        <th>Inventory</th>
-        <th>Display Status</th>
-    </tr>
-
-    @foreach (var prize in Model) // displays each prize associated with the store, with a link to that prize
-    {
+    <table class="table">
         <tr>
-            <td><a href="/Prize/Index/@prize.PrizeID">@prize.PrizeName</a></td>
-            <td>@prize.Price</td>
-            <td>@prize.Inventory</td>
-            <td>@prize.DisplayStatus</td>
+            <th>Image</th>
+            <th>Prize Name</th>
+            <th>Price</th>
+            <th>Inventory</th>
+            <th>Display Status</th>
         </tr>
-    }
 
-</table>
-<a asp-area="" asp-controller="Prize" asp-action="CreatePrize">Add a New Prize</a>
+        @foreach (var prize in Model) // displays each prize associated with the store, with a link to that prize
+        {
+            <tr>
+                <td><img src="@prize.ImageLink" style="width:@(prize.ImageWidth)px;height:@(prize.ImageHeight)px;"></td>
+                <td><a href="/Prize/Index/@prize.PrizeID">@prize.PrizeName</a></td>
+                <td>@prize.Price</td>
+                <td>@prize.Inventory</td>
+                <td>@prize.DisplayStatus</td>
+            </tr>
+        }
 
+    </table>
+    <a asp-area="" asp-controller="Prize" asp-action="CreatePrize">Add a New Prize</a>
+</div class="secondary-page">

@@ -18,7 +18,7 @@ namespace StudentRewardsStore
         }
         public IEnumerable<Student> ListStudents(int organizationID)
         {
-            return _conn.Query<Student>("SELECT * FROM students WHERE _OrganizationID = @OrganizationID;", new { OrganizationID = organizationID });
+            return _conn.Query<Student>("SELECT * FROM students WHERE _OrganizationID = @OrganizationID ORDER BY StudentName;", new { OrganizationID = organizationID });
         }
         public Student ViewStudent(int studentID)
         {

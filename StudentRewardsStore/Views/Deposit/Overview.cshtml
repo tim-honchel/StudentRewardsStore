@@ -1,29 +1,30 @@
 ﻿@model IEnumerable<Deposit>
+    <div class="secondary-page">
+    <h2>List of Deposits</h2>
+    <p>Select a deposit to modify:</p>
 
-<h2>List of Deposits</h2>
-<p>Select a deposit to modify:</p>
 
-
-<table class="table">
-    <tr>
-        <th>Deposit #</th>
-        <th>Student</th>
-        <th>Amount</th>
-        <th>Date</th>
-        
-    </tr>
-
-    @foreach (var deposit in Model) // displays each deposit associated with the store, with a link to that deposit
-    {
+    <table class="table">
         <tr>
-            <td><a href="/Deposit/Index/@deposit.DepositID">@deposit.DepositID</a></td>
-            <td>@deposit.StudentName</td>
-            <td>@deposit.Amount</td>
-            <td>@deposit.Date</td>
-            
-            
+            <th>Deposit #</th>
+            <th>Student</th>
+            <th>Amount</th>
+            <th>Date</th>
+        
         </tr>
-    }
 
-</table>
-<a asp-area="" asp-controller="Deposit" asp-action="RecordDeposit">Record a New Deposit</a>
+        @foreach (var deposit in Model) // displays each deposit associated with the store, with a link to that deposit
+        {
+            <tr>
+                <td><a href="/Deposit/Index/@deposit.DepositID">@deposit.DepositID</a></td>
+                <td>@deposit.StudentName</td>
+                <td>@deposit.Amount</td>
+                <td>@deposit.Date</td>
+            
+            
+            </tr>
+        }
+
+    </table>
+    <a asp-area="" asp-controller="Deposit" asp-action="RecordDeposit">Record a New Deposit</a>
+</div>

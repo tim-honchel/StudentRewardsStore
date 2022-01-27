@@ -3,16 +3,20 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - Student Rewards Store</title>
+    <title>@ViewData["Title"] - Best Prize Store</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" />
-    <link rel="stylesheet" href="~/css/custom.css" />
+    <link rel="stylesheet" href="~/custom.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Architects+Daughter&display=swap" rel="stylesheet">
+    <link href="/favicon.png" rel="shortcut icon">
 </head>
 <body>
     <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3 header-image">
             <div class="container">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">Student Rewards Store</a>
+                <a class="special-font special-font-link" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
@@ -21,29 +25,29 @@
                     <ul class="navbar-nav flex-grow-1">
                         @if (Authentication.Type != "student" && Authentication.Type != "admin")
                         {
-                            <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="User" asp-action="Login">Student Login</a>
+                            <li class="nav-item white">
+                                <a class="nav-links" asp-area="" asp-controller="User" asp-action="Login">Student Login</a>
                             </li>
-                            <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Admin" asp-action="Login">Admin Login</a>
+                            <li class="nav-item white">
+                                <a class="nav-links" asp-area="" asp-controller="Admin" asp-action="Login">Admin Login</a>
                             </li>
                         }
                         @if (Authentication.Type == "student")
                         {
                             <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="User" asp-action="Store">Store Page</a>
+                                <a class="nav-links" asp-area="" asp-controller="User" asp-action="Store">Store Page</a>
                             </li>
                         }
                         @if (Authentication.Type == "admin")
                         {
                             <li class="nav-item">
-                                <a class="nav-link text-dark" href="/Organization/Index/@Authentication.StoreID" >Store Dashboard</a>
+                                <a class="nav-links" href="/Organization/Index/@Authentication.StoreID" >Store Dashboard</a>
                             </li>
                         }
                         @if (Authentication.Type == "student" || Authentication.Type == "admin")
                         {
                             <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="User" asp-action="Logout">Logout</a>
+                                <a class="nav-links" asp-area="" asp-controller="User" asp-action="Logout">Logout</a>
                             </li>
                         }
                     </ul>
@@ -51,15 +55,15 @@
             </div>
         </nav>
     </header>
-    <div class="container">
-        <main role="main" class="pb-3">
+    <div>
+        <main role="main" class="pb-3 my-content">
             @RenderBody()
         </main>
     </div>
 
-    <footer class="border-top footer text-muted">
+    <footer class="border-top footer text-muted footer-image my-footer">
         <div class="container">
-            &copy; 2022 - Tim Honchel - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+            <span class = "special-font">&copy; 2022 - Tim Honchel</span>
         </div>
     </footer>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>

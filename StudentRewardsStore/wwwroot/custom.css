@@ -1,0 +1,122 @@
+﻿body {
+    background-color: rgb(245, 245, 245);
+
+}
+
+.column-1 {
+    float: left;
+    width: 49.5%;
+    text-align: center;
+    padding-right:2%;
+}
+
+.column-2 {
+    float: left;
+    width: 49.5%;
+    text-align: center;
+    padding-left:2%;
+}
+.column-a {
+    float: left;
+    width: 49.5%;
+    padding-right: 2%;
+}
+
+.column-b {
+    float: left;
+    width: 49.5%;
+    text-align: center;
+    padding-left: 2%;
+}
+
+.footer-image {
+    background-image: url(/images/banner-image.jpg);
+    background-attachment: fixed;
+    background-size: 100%;
+    z-index: 2;
+}
+
+.header-image {
+    background-image: url(/images/banner-image.jpg);
+    background-attachment: fixed;
+    background-size: 100%;
+    z-index: 2;
+}
+
+.main-page {
+    position: absolute;
+    overflow: auto;
+    top: 6%;
+    bottom: 6%;
+    padding-top: 2%;
+    padding-bottom: 2%;
+    padding-left: 12%;
+    padding-right: 12%;
+}
+
+.my-footer {
+    position: absolute;
+    bottom: 0;
+    overflow: hidden;
+    left:0;
+}
+
+.my-secondary-title {
+    font-family: 'Architects Daughter', cursive;
+    color: darkblue;
+}
+
+.my-title {
+    font-family: 'Architects Daughter', cursive;
+    color:darkblue;
+}
+
+.nav-links {
+    color: white;
+    text-shadow: 1px 1px 2px black, 0 0 25px blue, 0 0 5px darkblue;
+    font-size: 16pt;
+    font-weight: 700;
+    padding-left: 40px;
+}
+
+.nav-links:hover {
+    color: goldenrod;
+    text-decoration: underline;
+    text-decoration-color: goldenrod;
+}
+
+.photo {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 100%;
+}
+
+.secondary-page {
+    padding-top:60px;
+    padding-left:120px;
+    padding-right:120px;
+}
+
+.special-font {
+    color: white;
+    font-size: 14pt;
+    font-weight: bold;
+    -webkit-text-stroke-width: 1px;
+    -webkit-text-stroke-color: black;
+    /*text-shadow: 3px 3px 0 #000, -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000;*/
+}
+
+.special-font-link {
+    color: whitesmoke;
+    text-shadow: 1px 1px 2px black, 0 0 25px blue, 0 0 5px darkblue;
+    font-size: 18pt;
+    font-weight: 700;
+    /*padding-left: 40px;*/
+}
+
+.special-font-link:hover {
+    color: goldenrod;
+    text-decoration: underline;
+    text-decoration-color: goldenrod;
+}

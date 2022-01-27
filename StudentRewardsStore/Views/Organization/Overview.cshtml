@@ -1,29 +1,34 @@
 ﻿@model Organization
 
 @*Displays store settings with links to various actions*@
+<div class="secondary-page">
+    <div class="column-a">
+        <h2>@Model.Name Dashboard</h2>
+        <p>Welcome!</p>
 
-<h2>@Model.Name Dashboard</h2>
-<p>Welcome</p>
+        <h6>Store Info</h6>
+        <p>The store is currently @Model.StoreStatus</p>
+        @*<p>Auto schedule is turned @Model.AutoSchedule</p>*@
+        <a asp-area="" asp-controller="Organization" asp-action="Settings" asp-route-id="@Model.OrganizationID">Edit store settings</a>
+        <br>
+        <br>
+        <h6>Students</h6>
+        <a asp-area="" asp-controller="Student" asp-action="Overview">View, modify, or add students</a>
+        <br>
+        <br>
+        <h6>Prizes</h6>
+        <a asp-area="" asp-controller="Prize" asp-action="Overview">View, modify, or add prizes</a>
+        <br>
+        <br>
+        <h6>Orders</h6>
+        <a asp-area="" asp-controller="Order" asp-action="Overview">View orders and mark as fulfilled</a>
+        <br>
+        <br>
+        <h6>Deposits</h6>
+        <a asp-area="" asp-controller="Deposit" asp-action="Overview">View, modify, and record deposits</a>
+    </div>
+    <div class="column-b">
+        <img class="photo" src="\images\dashboard.jpg">
+    </div>
 
-<h6>Store Info</h6>
-<p id="close">The store is currently @Model.StoreStatus</p>
-@*<p id="close">Auto schedule is turned @Model.AutoSchedule</p>*@
-<a asp-area="" asp-controller="Organization" asp-action="Settings" asp-route-id="@Model.OrganizationID">Edit store settings</a>
-<br>
-<br>
-<h6>Students</h6>
-<a asp-area="" asp-controller="Student" asp-action="Overview">View, modify, or add students</a>
-<br>
-<br>
-<h6>Prizes</h6>
-<a asp-area="" asp-controller="Prize" asp-action="Overview">View, modify, or add prizes</a>
-<br>
-<br>
-<h6>Orders</h6>
-<a asp-area="" asp-controller="Order" asp-action="Overview">View orders and mark as fulfilled</a>
-<br>
-<br>
-<h6>Deposits</h6>
-<a asp-area="" asp-controller="Deposit" asp-action="Overview">View, modify, and record deposits</a>
-<br>
-<br>
+</div>
