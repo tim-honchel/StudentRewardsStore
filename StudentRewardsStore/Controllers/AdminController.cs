@@ -11,36 +11,36 @@ namespace StudentRewardsStore.Controllers
         
         public AdminController(IAdminsRepository repo)
         {
-            this.repo = repo;
+            this.repo = repo; // data repository for the admin table
         }
 
         public IActionResult Index()
         {
-            return RedirectToAction("Login"); // the admin login page
+            return RedirectToAction("Login"); // admin login page
         }
         public IActionResult Login()
         {
-            return View(); // the admin login page
+            return View(); // admin login page
         }
 
         public IActionResult Register()
         {
-            return View(); // the new admin registration page
+            return View(); // new admin registration page
         }
 
-        public IActionResult Overview(string email, string unhashed) // receives the email and password from the login page
+        public IActionResult Overview(string email, string unhashed) // passes in the email and password from the login page
         {
             
             try
             {
-                var authenticate = repo.CheckPassword(email, unhashed); // authenticates that the mail and password match the database record
-                var stores = repo.ListStores(authenticate.AdminID); // retrieves all the stores owned by the admin
-                var admin = repo.GetAdminID(email); // retrieves the admin
+                var authenticate = repo.CheckPassword(email, unhashed); // authenticates that the email and password match the database record
+                var stores = repo.ListStores(authenticate.AdminID); // retrieves data for all stores associated with the admin
+                var admin = repo.GetAdminID(email); // retrieves the admin's ID
 
                 Authentication.Type = "admin";
-                Authentication.StudentID = -1;
+                Authentication.StudentID = -1; // not a student
                 Authentication.AdminID = admin.AdminID;
-                Authentication.StoreID = -1;
+                Authentication.StoreID = -1; // no store has been selected yet
 
                 return View(stores); // the admin overview page
             }
@@ -51,12 +51,12 @@ namespace StudentRewardsStore.Controllers
         }
 
 
-        public IActionResult RegisterAdmin(Admin admin) // receives data for a new admin
+        public IActionResult RegisterAdmin(Admin admin) // passes in data for a new admin from the register page
         {
             try
             {
-                repo.RegisterAdmin(admin); // encrypts the password and adds new admin record to database
-                return RedirectToAction("Login"); // return to the login page
+                repo.RegisterAdmin(admin); // encrypts the password and writes the new admin data to the database
+                return RedirectToAction("Login"); // returns to the login page
             }
             catch (Exception)
             {
@@ -67,7 +67,7 @@ namespace StudentRewardsStore.Controllers
         {
             return View(); // displays message
         }
-        public IActionResult NotSignedIn() // redirected when attempting to access a protected page
+        public IActionResult NotSignedIn() // redirected when attempting to access a protected page without authorization
         {
             return View(); // displays message
         }

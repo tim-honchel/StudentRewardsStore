@@ -1,6 +1,5 @@
 ﻿body {
-    background-color: rgb(245, 245, 245);
-
+    background-color: rgb(245, 245, 245)
 }
 
 .column-1 {
@@ -45,7 +44,7 @@
 
 .main-page {
     position: absolute;
-    overflow: auto;
+    overflow: auto; /*allows scrolling*/
     top: 6%;
     bottom: 6%;
     padding-top: 2%;
@@ -54,7 +53,7 @@
     padding-right: 12%;
 }
 
-.my-footer {
+.my-footer { /*keeps footer fixed to the bottom*/
     position: absolute;
     bottom: 0;
     overflow: hidden;
@@ -73,13 +72,13 @@
 
 .nav-links {
     color: white;
-    text-shadow: 1px 1px 2px black, 0 0 25px blue, 0 0 5px darkblue;
+    text-shadow: 1px 1px 2px black, 0 0 25px blue, 0 0 5px darkblue; /*creates a blue-black shadow around the navigation link text*/
     font-size: 16pt;
     font-weight: 700;
     padding-left: 40px;
 }
 
-.nav-links:hover {
+.nav-links:hover { /*turns the navigation links golden when hovered over*/
     color: goldenrod;
     text-decoration: underline;
     text-decoration-color: goldenrod;
@@ -104,7 +103,6 @@
     font-weight: bold;
     -webkit-text-stroke-width: 1px;
     -webkit-text-stroke-color: black;
-    /*text-shadow: 3px 3px 0 #000, -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000;*/
 }
 
 .special-font-link {
@@ -112,7 +110,6 @@
     text-shadow: 1px 1px 2px black, 0 0 25px blue, 0 0 5px darkblue;
     font-size: 18pt;
     font-weight: 700;
-    /*padding-left: 40px;*/
 }
 
 .special-font-link:hover {

@@ -1,6 +1,6 @@
 ﻿@model IEnumerable<Student>
 
-@*Displays students with links to edit or add new*@
+@*Displays all students associated with the store, with links to edit or add new*@
 
 <div class="secondary-page">
 
@@ -10,18 +10,18 @@
 
     <table class="table">
         <tr>
-            <th>Student ID</th>
+            <th>Student ID</th> @*headers*@
             <th>Student Name</th>
             <th>Balance</th>
             <th>Category</th>
             <th>Status</th>
         </tr>
 
-        @foreach (var student in Model) // displays each student associated with the store, with a link to that student
+        @foreach (var student in Model) // cycles through and creates a row for each student
         {
             <tr>
                 <td>@student.StudentID</td>
-                <td><a href="/Student/Index/@student.StudentID">@student.StudentName</a></td>
+                <td><a href="/Student/Index/@student.StudentID">@student.StudentName</a></td> @*link to edit the student's data*@
                 <td>@student.Balance</td>
                 <td>@student.Category</td>
                 <td>@student.Status</td>
@@ -29,6 +29,6 @@
         }
 
     </table>
-    <a asp-area="" asp-controller="Student" asp-action="AddStudent">Add a New Student</a>
+    <a asp-area="" asp-controller="Student" asp-action="AddStudent">Add a New Student</a> @*link to add a new student*@
 
 </div>

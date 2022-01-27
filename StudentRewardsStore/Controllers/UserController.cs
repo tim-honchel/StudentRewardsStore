@@ -41,6 +41,7 @@ namespace StudentRewardsStore.Controllers
                     Authentication.StoreID = studentRepo.ViewStudent(user.StudentID)._OrganizationID;
                     StoreInfo.CurrentOrder.Clear();
                     StoreInfo.CartMessage = "";
+                    StoreInfo.StudentStatus = record.Status;
                     return RedirectToAction("Store");
                 }
                 else
@@ -68,6 +69,7 @@ namespace StudentRewardsStore.Controllers
                     Authentication.StoreID = studentRepo.ViewStudent(user.StudentID)._OrganizationID;
                     StoreInfo.CurrentOrder.Clear();
                     StoreInfo.CartMessage = "";
+                    StoreInfo.StudentStatus = record.Status;
                     return RedirectToAction("Store");
                 }
                 else

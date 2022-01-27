@@ -6,9 +6,9 @@
 
     <h2>@Model.StudentName</h2>
     <p>Edit the student's' information, then click "Update."</p>
-    @using (Html.BeginForm("UpdateStudent", "Student", "Post")) // posts updated values to Student controller, UpdateStudent action
+    @using (Html.BeginForm("UpdateStudent", "Student", "Post")) // inputs and posts updated values to Student controller, UpdateStudent action
     {
-        <input asp-for="StudentID" type="hidden" value="@Model.StudentID" />
+        <input asp-for="StudentID" type="hidden" value="@Model.StudentID" /> @*primary key is hidden, but included in post*@
         <br>
         <label asp-for="StudentName" class="control-label">Name</label>
         <input type="text" name="StudentName" class="form-control" value="@Model.StudentName" />
@@ -20,16 +20,15 @@
         <input type="text" name="Category" class="form-control" value="@Model.Category" />
         <br>
         <label asp-for="Status" class="control-label">Status</label>
-        //<input type="text" name="Status" class="form-control" value="@Model.Status" />
-        <select class="form-control" name="Status" value="@Model.Status">
-            <option value="@Model.Status">@Model.Status</option>
-            @foreach (var status in Model.StatusDropdown)
+        <select class="form-control" name="Status" value="@Model.Status"> @*dropdown list*@
+            <option value="@Model.Status">@Model.Status</option> @*the current value will be the default, at the top of the dropdown list*@
+            @foreach (var status in Model.StatusDropdown) @*populates the dropdown list with values*@
             {
        	        <option value="@status">@status</option>
             }
             </select>
         <br>
-        <input type="submit" value="Update" class="btn btn-primary" />
+        <input type="submit" value="Update" class="btn btn-primary" /> @*submit button*@
 
 }
 </div>

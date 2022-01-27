@@ -18,16 +18,19 @@ namespace StudentRewardsStore.Controllers
             if (Authentication.StoreID == order._Organization_ID_)
             {
                 order.StatusDropdown = new List<string>() { "unfulfilled", "fulfilled", "canceled" };
+                order.StatusDropdown.Remove(order.FulfillmentStatus);
                 order.CostDropdown = new List<int>();
                 for (int i = 0; i <= 1000; i++)
                 {
                     order.CostDropdown.Add(i);
                 }
+                order.CostDropdown.Remove(order.Cost);
                 order.QuantityDropdown = new List<int>();
                 for (int i = 0; i <= 50; i++)
                 {
                     order.QuantityDropdown.Add(i);
                 }
+                order.QuantityDropdown.Remove(order.Quantity);
                 return View(order); // the specific order page
             }
             else

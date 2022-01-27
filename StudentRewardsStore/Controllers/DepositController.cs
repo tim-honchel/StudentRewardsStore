@@ -11,48 +11,49 @@ namespace StudentRewardsStore.Controllers
         private readonly IStudentsRepository studentRepo;
         public DepositController(IDepositsRepository repo, IStudentsRepository studentRepo)
         {
-            this.repo = repo;
-            this.studentRepo = studentRepo;
+            this.repo = repo; // deposit data repository
+            this.studentRepo = studentRepo; // student data repository
         }
         public IActionResult Index(int id)
         {
             var deposit = repo.ViewDeposit(id); // retrieves the relevant deposit
-            if (Authentication.StoreID == deposit._Organization_ID)
+            if (Authentication.StoreID == deposit._Organization_ID) // verifies the user is authorized to access this page
             {
-                deposit.AmountDropdown = new List<int>();
-                for (int i = 0; i <= 100; i++)
+                deposit.AmountDropdown = new List<int>(); // sets up a dropdown list for the deposit amount
+                for (int i = 0; i <= 100; i++) // populates the dropdown menu with values 0 to 100
                 {
                     deposit.AmountDropdown.Add(i);
                 }
-                for (int i = -1; i>=-100; i--)
+                for (int i = -1; i>=-100; i--) // also populates the menu with values -1 to -100
                 {
                     deposit.AmountDropdown.Add(i);
                 }
+                deposit.AmountDropdown.Remove(deposit.Amount);
                 return View(deposit); // the specific deposit page
             }
             else
             {
-                return RedirectToAction("NotSignedIn", "Admin");
+                return RedirectToAction("NotSignedIn", "Admin"); // redirects if authorization failed
             }
         }
         public IActionResult Overview()
         {
-            if (Authentication.Type == "admin" && Authentication.StoreID > 0)
+            if (Authentication.Type == "admin" && Authentication.StoreID > 0) // authenticates a user is logged in
             {
                 var deposits = repo.ShowAllDeposits(Authentication.StoreID); // retrieves all the store's deposits
                 return View(deposits); // the deposits overview page
             }
             else
             {
-                return RedirectToAction("NotSignedIn", "Admin");
+                return RedirectToAction("NotSignedIn", "Admin"); // redirects if no user is logged in
             }
         }
         public IActionResult UpdateDeposit(Deposit deposit)
         {
             try
             {
-                repo.UpdateDeposit(deposit);
-                return RedirectToAction("Overview");
+                repo.UpdateDeposit(deposit); // writes the updated values to the database
+                return RedirectToAction("Overview"); // the deposits overview page
             }
             catch (Exception)
             {
@@ -61,17 +62,17 @@ namespace StudentRewardsStore.Controllers
         }
         public IActionResult RecordDeposit()
         {
-            if (Authentication.Type == "admin")
+            if (Authentication.Type == "admin") //authenticates a user is logged in
             {
                 var studentsForDropdownList = studentRepo.GetStudentIDs(Authentication.StoreID);
-                var deposit = new Deposit();
-                deposit.StudentDropdown = studentsForDropdownList;
+                var deposit = new Deposit(); // sets up dropdown lists for deposit amount and the student making the deposit
+                deposit.StudentDropdown = studentsForDropdownList;  // populates the student dropdown list with all the organization's student IDs and names
                 deposit.AmountDropdown = new List<int>();
-                for (int i = 0; i <= 100; i++)
+                for (int i = 0; i <= 100; i++) // // populates the amount dropdown with values from 0 to 100
                 {
                     deposit.AmountDropdown.Add(i);
                 }
-                for (int i = -1; i >= -100; i--)
+                for (int i = -1; i >= -100; i--) // also populates the amount dropdown with values from -1 to -100
                 {
                     deposit.AmountDropdown.Add(i);
                 }

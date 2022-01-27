@@ -20,14 +20,14 @@
     <header>
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3 header-image">
             <div class="container">
-                <a class="special-font special-font-link" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                <a class="special-font special-font-link" asp-area="" asp-controller="Home" asp-action="Index">Home</a> @*special class for color, shadow, and hover*@
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
                     <ul class="navbar-nav flex-grow-1">
-                        @if (Authentication.Type != "student" && Authentication.Type != "admin")
+                        @if (Authentication.Type != "student" && Authentication.Type != "admin") @*the navigation links displayed will depend on who is logged in*@
                         {
                             <li class="nav-item white">
                                 <a class="nav-links" asp-area="" asp-controller="User" asp-action="Login">Student Login</a>
@@ -61,7 +61,7 @@
     </header>
     <div>
         <main role="main" class="pb-3 my-content">
-            @RenderBody()
+            @RenderBody() @*all other HTML pages will be rendered at this point*@
         </main>
     </div>
 

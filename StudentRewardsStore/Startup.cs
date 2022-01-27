@@ -22,14 +22,13 @@ namespace StudentRewardsStore
 
         public IConfiguration Configuration { get; }
 
-        // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddScoped<IDbConnection>((s) =>
             {
 
-                    IDbConnection conn = new MySqlConnection(Configuration.GetConnectionString("azure"));
-                    //IDbConnection conn = new MySqlConnection(Configuration.GetConnectionString("localhost"));
+                    IDbConnection conn = new MySqlConnection(Configuration.GetConnectionString("azure")); // to access Azure database server
+                    //IDbConnection conn = new MySqlConnection(Configuration.GetConnectionString("localhost")); // to access local database server
                     conn.Open();
                     return conn;
 
@@ -39,7 +38,7 @@ namespace StudentRewardsStore
                 
             });
 
-            services.AddTransient<IOrganizationsRepository, OrganizationsRepository>();
+            services.AddTransient<IOrganizationsRepository, OrganizationsRepository>(); // to configure tables and models
             services.AddTransient<IAdminsRepository, AdminsRepository>();
             services.AddTransient<IPrizesRepository, PrizesRepository>();
             services.AddTransient<IStudentsRepository, StudentsRepository>();
@@ -49,7 +48,6 @@ namespace StudentRewardsStore
             services.AddControllersWithViews();
         }
 
-        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             if (env.IsDevelopment())
@@ -59,7 +57,6 @@ namespace StudentRewardsStore
             else
             {
                 app.UseExceptionHandler("/Home/Error");
-                // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
             app.UseHttpsRedirection();

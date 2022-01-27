@@ -4,9 +4,9 @@
 <div class="secondary-page">
     <h2>Add a Prize to the Store</h2>
     <p>Enter the information and click "Create".</p>
-    @using (Html.BeginForm("SaveNewPrize", "Prize", "Post")) // posts email and password to admin controller, overview action
+    @using (Html.BeginForm("SaveNewPrize", "Prize", "Post")) // inputs and posts email and password to Admin controller, Overview action
     {
-        <input asp-for="PrizeID" type="hidden" value="" />
+        <input asp-for="PrizeID" type="hidden" value="" /> @*primary key is auto-incremented and hidden, but included in the post*@
         <br>
         <label asp-for="PrizeName" class="control-label">Name</label>
         <input type="text" name="PrizeName" class="form-control" value="" />
@@ -18,34 +18,31 @@
         <input type="text" name="ImageLink" class="form-control" value="" />
         <br>
         <label asp-for="Price" class="control-label">Price</label>
-        //<input type="text" name="Price" class="form-control" value="" />
-        <select class="form-control" name="Price" value="">
-            @foreach (int num in Model.PriceDropdown)
+        <select class="form-control" name="Price" value=""> @*dropdown list*@
+            @foreach (int num in Model.PriceDropdown) @*populates the dropdown list*@
             {
                  <option value="@num">@num</option>
             }
         </select>
         <br>
         <label asp-for="DisplayStatus" class="control-label">Show or Hide in Store</label>
-        //<input type="text" name="DisplayStatus" class="form-control" value="" />
-        <select class="form-control" name="DisplayStatus" value="">
-            @foreach (var status in Model.StatusDropdown)
+        <select class="form-control" name="DisplayStatus" value=""> @*dropdown list*@
+            @foreach (var status in Model.StatusDropdown) @*populates the dropdown list*@
             {
        	        <option value="@status">@status</option>
             }
             </select>
         <br>
         <label asp-for="Inventory" class="control-label">Current Inventory Count</label>
-        //<input type="text" name="Inventory" class="form-control" value="" />
-        <select class="form-control" name="Inventory" value="">
-            @foreach (int num in Model.InventoryDropdown)
+        <select class="form-control" name="Inventory" value=""> @*dropdown list*@
+            @foreach (int num in Model.InventoryDropdown) @*populates the dropdown list*@
             {
                  <option value="@num">@num</option>
             }
         </select>
         <br>
-        <input asp-for="_OrganizationID" type="hidden" value="@Authentication.StoreID" />
-        <input type="submit" value="Create" class="btn btn-primary" />
+        <input asp-for="_OrganizationID" type="hidden" value="@Authentication.StoreID" /> @*foreign key is set to current organizationID, hidden, and included in post*@
+        <input type="submit" value="Create" class="btn btn-primary" /> @*submit button*@
     
     }
 </div>

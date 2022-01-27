@@ -5,9 +5,9 @@
     <div class="secondary-page">
     <h2>Add a Student Account</h2>
     <p>Enter the information and click "Create".</p>
-    @using (Html.BeginForm("SaveNewStudent", "Student", "Post")) // posts values to Student controller, SaveNewStudent action
+    @using (Html.BeginForm("SaveNewStudent", "Student", "Post")) // form that inputs and posts values to Student controller, SaveNewStudent action
     {
-        <input asp-for="StudentID" type="hidden" value="" />
+        <input asp-for="StudentID" type="hidden" value="" /> @*primary key is auto-generated, so it can be hidden, but needs to be included in post*@
         <br>
         <label asp-for="StudentName" class="control-label">Name</label>
         <input type="text" name="StudentName" class="form-control" value="" />
@@ -21,17 +21,16 @@
         <label asp-for="Balance" class="control-label">Balance</label>
         <input type="text" name="Balance" class="form-control" value="" />
         <br>
-        <label asp-for="Status" class="control-label">Status (active or inactive)</label>
-        //<input type="text" name="Status" class="form-control" value="" />
-        <select class="form-control" name="Status" value="">
-            @foreach (var status in Model.StatusDropdown)
+        <label asp-for="Status" class="control-label">Status</label>
+        <select class="form-control" name="Status" value=""> @*dropdown list*@
+            @foreach (var status in Model.StatusDropdown) @*populates the dropdown list*@
             {
        	        <option value="@status">@status</option>
             }
             </select>
         <br>
-        <input asp-for="_OrganizationID" type="hidden" value="@Authentication.StoreID" />
-        <input type="submit" value="Add" class="btn btn-primary" />
+        <input asp-for="_OrganizationID" type="hidden" value="@Authentication.StoreID" /> @*foreign key will be set to the current organization ID, kept hidden*@
+        <input type="submit" value="Add" class="btn btn-primary" /> @*submit button*@
     }
 </div>
 

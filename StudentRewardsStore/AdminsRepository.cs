@@ -14,26 +14,25 @@ namespace StudentRewardsStore
 
         public AdminsRepository(IDbConnection conn)
         {
-            _conn = conn;
+            _conn = conn; // connection to the MySQL admin table via Dapper
         }
-        public void RegisterAdmin(Admin newAdmin)
+        public void RegisterAdmin(Admin newAdmin) // passes in data for a new admin, encrypts the passwords, and inserts the data into the database
         {
             newAdmin.Password = encryption(newAdmin.Unhashed);
             _conn.Execute("INSERT INTO admins (AdminID, Email, Password) VALUES (@AdminID, @Email, @Password);", new { AdminID = newAdmin.AdminID, Email = newAdmin.Email, Password = newAdmin.Password });
         }
         
-        public IEnumerable<Organization> ListStores(int adminID)
+        public IEnumerable<Organization> ListStores(int adminID) // passes in an admin's ID and returns a list of all stores associated with that admin
         {
             return _conn.Query<Organization>("SELECT * FROM organizations LEFT JOIN admins ON organizations._AdminID = admins.AdminID WHERE organizations._AdminID = @AdminID;", new { AdminID = adminID });
         }
-        public Admin CheckPassword(string email, string unhashed)
+        public Admin CheckPassword(string email, string unhashed) // passes in an admin's email and unhashed password and returns their data if the email and encrypted password match
         {
             string password = encryption(unhashed);
             return _conn.QuerySingle<Admin>("SELECT * FROM admins WHERE Email = @Email AND Password = @Password;", new { Email = email, Password = password });
         }
         
-        
-        public string encryption(string unhashed)
+        public string encryption(string unhashed) // passes in an unhashed password and using XAct, encrpyts and returns it
         {
             MD5CryptoServiceProvider md5 = new MD5CryptoServiceProvider();
             byte[] encrypt;
@@ -48,7 +47,7 @@ namespace StudentRewardsStore
             }
             return encryptdata.ToString();
         }
-        public Admin GetAdminID(string email)
+        public Admin GetAdminID(string email) // passes in an email, queries the database, and returns the data for the admin associated with that email address
         {
             return _conn.QuerySingle<Admin>("SELECT * FROM admins WHERE Email = @Email;", new { Email = email});
         }

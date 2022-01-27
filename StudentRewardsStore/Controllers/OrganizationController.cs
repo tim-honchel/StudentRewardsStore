@@ -73,6 +73,7 @@ namespace StudentRewardsStore.Controllers
             {
                 var store = repo.OpenStore(id);
                 store.StatusDropdown = new List<string>() { "closed", "open" };
+                store.StatusDropdown.Remove(store.StoreStatus);
                 return View(store); ;
             }
             else

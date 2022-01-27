@@ -4,7 +4,7 @@ namespace StudentRewardsStore.Models
 {
     public class Student
     {
-        public int StudentID { get; set; }
+        public int StudentID { get; set; } // primary key
         public string StudentName { get; set; }
         public string PIN { get; set; }
         public string Category { get; set; }
