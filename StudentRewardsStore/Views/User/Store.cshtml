@@ -1,7 +1,7 @@
 ﻿@model IEnumerable<Prize>
 <div class="secondary-page">
     <h2>@StoreInfo.StoreName</h2>
-    <p>@StoreInfo.StudentName, you have @StoreInfo.Balance @StoreInfo.Currency. Store: @StoreInfo.StoreStatus. Student: @StoreInfo.StudentStatus<p>
+    <p>@StoreInfo.StudentName, you have @StoreInfo.Balance @StoreInfo.Currency.<p>
     @if (StoreInfo.StoreStatus == "closed") 
     {
         <p style="color:darkred">The store is closed.</p>

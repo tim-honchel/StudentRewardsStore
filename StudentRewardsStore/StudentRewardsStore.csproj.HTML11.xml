@@ -1,0 +1,11 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ProjectOptions xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <redirectRules>
+    <RedirectRule>
+      <name>mobile</name>
+      <pattern>.+</pattern>
+      <target>en/$_</target>
+      <stopProcessing>true</stopProcessing>
+    </RedirectRule>
+  </redirectRules>
+</ProjectOptions>

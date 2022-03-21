@@ -30,24 +30,24 @@ namespace StudentRewardsStore.Controllers
 
         public IActionResult Overview(string email, string unhashed) // passes in the email and password from the login page
         {
-            
-            try
-            {
-                var authenticate = repo.CheckPassword(email, unhashed); // authenticates that the email and password match the database record
-                var stores = repo.ListStores(authenticate.AdminID); // retrieves data for all stores associated with the admin
-                var admin = repo.GetAdminID(email); // retrieves the admin's ID
 
-                Authentication.Type = "admin";
-                Authentication.StudentID = -1; // not a student
-                Authentication.AdminID = admin.AdminID;
-                Authentication.StoreID = -1; // no store has been selected yet
+                try
+                {
+                    var authenticate = repo.CheckPassword(email, unhashed); // authenticates that the email and password match the database record
+                    var stores = repo.ListStores(authenticate.AdminID); // retrieves data for all stores associated with the admin
+                    var admin = repo.GetAdminID(email); // retrieves the admin's ID
 
-                return View(stores); // the admin overview page
-            }
-            catch (Exception)
-            {
-                return RedirectToAction("InvalidCredentials"); // redirects if the email and password could not be authenticated
-            }
+                    Authentication.Type = "admin";
+                    Authentication.StudentID = -1; // not a student
+                    Authentication.AdminID = admin.AdminID;
+                    Authentication.StoreID = -1; // no store has been selected yet
+
+                    return View(stores); // the admin overview page
+                }
+                catch (Exception)
+                {
+                    return RedirectToAction("InvalidCredentials"); // redirects if the email and password could not be authenticated
+                }
         }
 
 
@@ -56,7 +56,11 @@ namespace StudentRewardsStore.Controllers
             try
             {
                 repo.RegisterAdmin(admin); // encrypts the password and writes the new admin data to the database
-                return RedirectToAction("Login"); // returns to the login page
+                Authentication.Type = "admin";
+                Authentication.StudentID = -1; // not a student
+                Authentication.AdminID = admin.AdminID;
+                Authentication.StoreID = -1; // no store has been selected yet
+                return View(); // displays that the admin account was created
             }
             catch (Exception)
             {
