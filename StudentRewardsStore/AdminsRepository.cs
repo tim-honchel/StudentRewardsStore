@@ -11,6 +11,7 @@ namespace StudentRewardsStore
     public class AdminsRepository : IAdminsRepository
     {
         private readonly IDbConnection _conn;
+        //private Random random;
 
         public AdminsRepository(IDbConnection conn)
         {
@@ -18,8 +19,10 @@ namespace StudentRewardsStore
         }
         public void RegisterAdmin(Admin newAdmin) // passes in data for a new admin, encrypts the passwords, and inserts the data into the database
         {
-            newAdmin.Password = encryption(newAdmin.Unhashed);
-            _conn.Execute("INSERT INTO admins (AdminID, Email, Password) VALUES (@AdminID, @Email, @Password);", new { AdminID = newAdmin.AdminID, Email = newAdmin.Email, Password = newAdmin.Password });
+            Random random = new Random();
+            newAdmin.Salt = random.Next().ToString();
+            newAdmin.Password = encryption(newAdmin.Salt, newAdmin.Unhashed);
+            _conn.Execute("INSERT INTO admins (AdminID, Email, Salt, Password) VALUES (@AdminID, @Email, @Salt, @Password);", new { AdminID = newAdmin.AdminID, Email = newAdmin.Email, Salt = newAdmin.Salt, Password = newAdmin.Password });
         }
         
         public IEnumerable<Organization> ListStores(int adminID) // passes in an admin's ID and returns a list of all stores associated with that admin
@@ -28,17 +31,24 @@ namespace StudentRewardsStore
         }
         public Admin CheckPassword(string email, string unhashed) // passes in an admin's email and unhashed password and returns their data if the email and encrypted password match
         {
-            string password = encryption(unhashed);
+            var salt = _conn.QuerySingle<Admin>("SELECT * FROM admins WHERE Email = @Email;", new { Email = email }).Salt;
+            if (salt == null)
+            {
+                salt = "";
+            }
+            string password = encryption(salt, unhashed);
             return _conn.QuerySingle<Admin>("SELECT * FROM admins WHERE Email = @Email AND Password = @Password;", new { Email = email, Password = password });
         }
         
-        public string encryption(string unhashed) // passes in an unhashed password and using XAct, encrpyts and returns it
+        public string encryption(string salt, string unhashed) // passes in an unhashed password and using XAct, encrpyts and returns it
         {
+            
+            
             MD5CryptoServiceProvider md5 = new MD5CryptoServiceProvider();
             byte[] encrypt;
             UTF8Encoding encode = new UTF8Encoding();
             // Encrypt the unhashed password string
-            encrypt = md5.ComputeHash(encode.GetBytes(unhashed));
+            encrypt = md5.ComputeHash(encode.GetBytes(salt + unhashed));
             StringBuilder encryptdata = new StringBuilder();
             //Create a new string by using the encrypted data  
             for (int i = 0; i < encrypt.Length; i++)

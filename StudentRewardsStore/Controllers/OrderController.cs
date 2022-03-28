@@ -40,7 +40,7 @@ namespace StudentRewardsStore.Controllers
         }
         public IActionResult Overview()
         {
-            if (Authentication.Type == "admin" && Authentication.StoreID > 0)
+            if ((Authentication.Type == "admin" || Authentication.Type == "demo admin") && Authentication.StoreID > 0)
             {
                 var orders = repo.ShowAllOrders(Authentication.StoreID); // retrieves all the store's orders
                 return View(orders); // the orders overview page

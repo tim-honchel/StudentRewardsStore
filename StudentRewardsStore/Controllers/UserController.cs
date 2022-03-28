@@ -88,7 +88,7 @@ namespace StudentRewardsStore.Controllers
         }
         public IActionResult Store()
         {
-            if (Authentication.Type == "student")
+            if (Authentication.Type == "student" || Authentication.Type == "demo student")
             {
                 var student = studentRepo.ViewStudent(Authentication.StudentID);
                 var store = orgRepo.OpenStore(Authentication.StoreID);
@@ -143,7 +143,10 @@ namespace StudentRewardsStore.Controllers
             {
                 finalOrder.Add(createOrder(item));
             }
-            ordersRepo.SaveNewOrders(finalOrder);
+            if (Authentication.Type != "demo student")
+            {
+                ordersRepo.SaveNewOrders(finalOrder);
+            }
             StoreInfo.CurrentOrder.Clear();
             return View(finalOrder);
         }
@@ -176,7 +179,35 @@ namespace StudentRewardsStore.Controllers
             StoreInfo.CartMessage = "";
             return RedirectToAction("Index", "Home");
         }
+        public IActionResult Demo()
+        {
+            Authentication.Type = "demo student";
+            Authentication.StudentID = 1;
+            Authentication.AdminID = -1;
+            Authentication.StoreID = 1;
+            StoreInfo.CurrentOrder.Clear();
+            StoreInfo.CartMessage = "";
+            StoreInfo.StudentStatus = "active";
+            
+            var demoStudent = new Student();
+            demoStudent.StudentID = 1;
+            demoStudent.StudentName = "Maria";
+            demoStudent.Status = "active";
+            demoStudent.Balance = 36;
+            studentRepo.LoadDemoStudent(demoStudent);
 
+            var demoStore = new Organization();
+            demoStore.OrganizationID = 1;
+            demoStore.Name = "Demo Store";
+            demoStore.CurrencyName = "Demo Dollars";
+            demoStore.StoreStatus = "open";
+            demoStore._AdminID = 1;
+            orgRepo.LoadDemoStore(demoStore);
+
+            prizeRepo.LoadDemoPrizes();
+
+            return RedirectToAction("Store");
+        }
         
     }
 }

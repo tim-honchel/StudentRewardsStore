@@ -38,7 +38,7 @@ namespace StudentRewardsStore.Controllers
         }
         public IActionResult Overview()
         {
-            if (Authentication.Type == "admin" && Authentication.StoreID > 0) // authenticates a user is logged in
+            if ((Authentication.Type == "admin" || Authentication.Type == "demo admin") && Authentication.StoreID > 0) // authenticates a user is logged in
             {
                 var deposits = repo.ShowAllDeposits(Authentication.StoreID); // retrieves all the store's deposits
                 return View(deposits); // the deposits overview page
@@ -62,7 +62,7 @@ namespace StudentRewardsStore.Controllers
         }
         public IActionResult RecordDeposit()
         {
-            if (Authentication.Type == "admin") //authenticates a user is logged in
+            if (Authentication.Type == "admin" || Authentication.Type == "demo admin") //authenticates a user is logged in
             {
                 var studentsForDropdownList = studentRepo.GetStudentIDs(Authentication.StoreID);
                 var deposit = new Deposit(); // sets up dropdown lists for deposit amount and the student making the deposit

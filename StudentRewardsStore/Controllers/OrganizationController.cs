@@ -9,10 +9,12 @@ namespace StudentRewardsStore.Controllers
     public class OrganizationController : Controller
     {
 
-        private readonly IOrganizationsRepository repo;
-        public OrganizationController(IOrganizationsRepository repo)
+        private readonly IOrganizationsRepository orgRepo;
+        private readonly IPrizesRepository prizeRepo;
+        public OrganizationController(IOrganizationsRepository orgRepo, IPrizesRepository prizeRepo)
         {
-            this.repo = repo;
+            this.orgRepo = orgRepo;
+            this.prizeRepo = prizeRepo;
         }
 
         public IActionResult Index(int id) // receives store ID
@@ -22,9 +24,13 @@ namespace StudentRewardsStore.Controllers
         
         public IActionResult Overview(int id) // receives store ID
         {
+            if (Authentication.Type == "demo admin")
+            {
+                id = 1;
+            }
             if (id > 0)
             {
-                var store = repo.OpenStore(id); // retrieves the relevant store
+                var store = orgRepo.OpenStore(id); // retrieves the relevant store
                 if (Authentication.AdminID == store._AdminID) // authenticates that the admin ID matches the store's admin ID
                 {
                     Authentication.StoreID = store.OrganizationID;
@@ -44,7 +50,7 @@ namespace StudentRewardsStore.Controllers
       
         public IActionResult CreateStore()
         {
-            if (Authentication.Type == "admin") // checks that an admin is logged in
+            if (Authentication.Type == "admin" || Authentication.Type == "demo admin") // checks that an admin is logged in
             {
                 return View(); // the Create Store page
             }
@@ -58,8 +64,8 @@ namespace StudentRewardsStore.Controllers
             try
             {
                 newStore.StoreStatus = "closed"; // default value
-                repo.SaveNewStore(newStore); // adds the new store to the database
-                var refreshedStore = repo.RefreshStore(newStore); // retrieves the store with its auto-generated store ID
+                orgRepo.SaveNewStore(newStore); // adds the new store to the database
+                var refreshedStore = orgRepo.RefreshStore(newStore); // retrieves the store with its auto-generated store ID
                 return RedirectToAction("Overview", new { id = refreshedStore.OrganizationID }); // redirects to the Store Overview page
             }
             catch (Exception)
@@ -71,7 +77,7 @@ namespace StudentRewardsStore.Controllers
         {
             if (Authentication.StoreID == id)
             {
-                var store = repo.OpenStore(id);
+                var store = orgRepo.OpenStore(id);
                 store.StatusDropdown = new List<string>() { "closed", "open" };
                 store.StatusDropdown.Remove(store.StoreStatus);
                 return View(store); ;
@@ -84,13 +90,29 @@ namespace StudentRewardsStore.Controllers
         public IActionResult UpdateStore(Organization store)
         {
             try {
-                repo.UpdateStore(store);
+                orgRepo.UpdateStore(store);
                 return RedirectToAction("Overview", new { id = store.OrganizationID });
             } 
             catch (Exception)
             {
                 return RedirectToAction("Error", "Home"); // redirects if there is an error writing to the database
             }
+        }
+        public IActionResult Demo()
+        {
+            Authentication.Type = "demo admin";
+            Authentication.StudentID = -1;
+            Authentication.AdminID = 1;
+            Authentication.StoreID = 1;
+            var demoStore = new Organization();
+            demoStore.OrganizationID = 1;
+            demoStore.Name = "Demo Store";
+            demoStore.CurrencyName = "Demo Dollars";
+            demoStore.StoreStatus = "open";
+            demoStore._AdminID = 1;
+            orgRepo.LoadDemoStore(demoStore);
+            prizeRepo.LoadDemoPrizes();
+            return RedirectToAction("Overview", 1);
         }
     }
 }

@@ -5,7 +5,14 @@
     <div class="column-a">
         <h2>@Model.Name Dashboard</h2>
         <p>Welcome!</p>
-        <p style="color:darkred">This is the beta version of "Best Prize Store" and is for trialing only. Please be aware that any information saved on this account will not be permanent. If you would like to see "Best Prize Store" made available to organizations like yours, please send an email to tim.honchel@gmail.com. </p>
+        @if (Authentication.Type == "demo admin")
+        {
+            <p style="color:darkred">This is a demo. Changes will not be saved.</p>
+        }
+        @if (Authentication.Type == "admin")
+        {
+            <p style="color:darkred">This is the beta version of "Best Prize Store" and is for trialing only. Please be aware that any information saved on this account will not be permanent. If you would like to see "Best Prize Store" made available to organizations like yours, please send an email to tim.honchel@gmail.com. </p>
+        }
         <h6>Store Info</h6>
         <p>The store is currently @Model.StoreStatus</p>
         @*<p>Auto schedule is turned @Model.AutoSchedule</p>*@

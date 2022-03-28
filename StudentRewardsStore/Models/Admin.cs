@@ -5,6 +5,7 @@
         public int AdminID { get; set; } // primary key
         public string Email { get; set; }
         public string Unhashed { get; set; }
+        public string Salt { get; set; }
         public string Password { get; set; }
     }
 }

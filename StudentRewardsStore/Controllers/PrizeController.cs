@@ -40,7 +40,7 @@ namespace StudentRewardsStore.Controllers
         }
         public IActionResult Overview()
         {
-            if (Authentication.Type == "admin" && Authentication.StoreID > 0 ) // authenticates that an admin is logged in
+            if ((Authentication.Type == "admin" || Authentication.Type == "demo admin") && Authentication.StoreID > 0 ) // authenticates that an admin is logged in
             { 
                 var prizes = repo.ListPrizes(Authentication.StoreID); // retrieves data for all the store's prizes
                 return View(prizes); // the prize overview page

@@ -27,6 +27,13 @@
     </table>
     <br>
     <p>Total Cost: @Model.Sum(x=>x.Cost)</p>
+    <br>
+    @if (Authentication.Type == "demo student")
+    {
+        <p style="color:darkred">This is a demo. Orders will not be saved. The student's account balance and the prize's inventory will not be affected.</p>
+        <br>
+    }
+    <p><a asp-area="" asp-controller="User" asp-action="Store">Go back to the store</a></p>
 </div>
 
     

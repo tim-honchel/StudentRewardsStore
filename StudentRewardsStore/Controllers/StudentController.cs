@@ -30,7 +30,7 @@ namespace StudentRewardsStore.Controllers
         }
         public IActionResult Overview()
         {
-            if (Authentication.Type == "admin" && Authentication.StoreID > 0) // authenticates that an admin is signed in
+            if ((Authentication.Type == "admin" || Authentication.Type == "demo admin") && Authentication.StoreID > 0) // authenticates that an admin is signed in
             {
                 var students = repo.ListStudents(Authentication.StoreID); // retrieves the data of all students associated with the store
                 return View(students); // student overview page
@@ -42,7 +42,7 @@ namespace StudentRewardsStore.Controllers
         }
         public IActionResult AddStudent()
         {
-            if (Authentication.Type == "admin" && Authentication.StoreID > 0) // authenticates that an admin is signed in
+            if ((Authentication.Type == "admin" || Authentication.Type == "demo admin") && Authentication.StoreID > 0) // authenticates that an admin is signed in
             {
                 var student = new Student();
                 student.StatusDropdown = new List<string>() { "active", "inactive" }; // sets up a dropdown list for the student's status

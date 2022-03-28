@@ -10,7 +10,7 @@ namespace StudentRewardsStore
         public void AddStudent(Student newStudent);
         public void UpdateStudent(Student student);
         public IEnumerable<Student> GetStudentIDs(int organizationID);
-
+        public void LoadDemoStudent(Student student);
 
     }
 }

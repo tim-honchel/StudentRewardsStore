@@ -8,5 +8,6 @@ namespace StudentRewardsStore
         public void SaveNewStore(Organization organization);
         public Organization RefreshStore(Organization newStore);
         public void UpdateStore(Organization store);
+        public void LoadDemoStore(Organization store);
     }
 }

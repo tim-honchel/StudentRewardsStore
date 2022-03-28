@@ -11,7 +11,7 @@ namespace StudentRewardsStore
         public void AddPrize(Prize newPrize);
         public IEnumerable<Prize> ShowAvailablePrizes(int organizationID);
 
-
+        public void LoadDemoPrizes();
 
     }
 }

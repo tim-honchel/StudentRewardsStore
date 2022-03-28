@@ -10,6 +10,10 @@
     {
         <p style="color:darkred">Your account is inactive.</p>
     }
+    @if (Authentication.Type == "demo student")
+    {
+        <p style="color:darkred">This is a demo. Orders will not be saved.</p>
+    }
     <br>
     @if (StoreInfo.StoreStatus == "open" && StoreInfo.StudentStatus == "active")
     {
