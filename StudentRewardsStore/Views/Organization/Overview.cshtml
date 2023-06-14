@@ -2,7 +2,6 @@
 
 @*Displays store settings with links to various actions*@
 <div class="secondary-page">
-    <div class="column-a">
         <h2>@Model.Name Dashboard</h2>
         <p>Welcome!</p>
         @if (Authentication.Type == "demo admin")
@@ -12,6 +11,10 @@
         @if (Authentication.Type == "admin")
         {
             <p style="color:darkred">This is the beta version of "Best Prize Store" and is for trialing only. Please be aware that any information saved on this account will not be permanent. If you would like to see "Best Prize Store" made available to organizations like yours, please send an email to tim.honchel@gmail.com. </p>
+        }
+        @if (Authentication.MultipleUsers == true)
+        {
+            <p style = "color:darkred">This account is signed in on multiple devices or windows, which may cause unexpected effects.</p>
         }
         <h6>Store Info</h6>
         <p>The store is currently @Model.StoreStatus</p>
@@ -33,9 +36,5 @@
         <br>
         <h6>Deposits</h6>
         <a asp-area="" asp-controller="Deposit" asp-action="Overview">View, modify, and record deposits</a>
-    </div>
-    <div class="column-b">
-        <img class="photo" src="\images\dashboard.jpg">
-    </div>
 
 </div>

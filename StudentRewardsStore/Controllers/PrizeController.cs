@@ -7,14 +7,16 @@ namespace StudentRewardsStore.Controllers
 {
     public class PrizeController : Controller
     {
-        private readonly IPrizesRepository repo;
-        public PrizeController(IPrizesRepository repo)
+        private readonly IPrizesRepository prizeRepo;
+        private readonly IAdminsRepository adminRepo;
+        public PrizeController(IPrizesRepository prizeRepo, IAdminsRepository adminRepo)
         {
-            this.repo = repo; // data repository for prizes table
+            this.prizeRepo = prizeRepo; // data repository for prizes table
+            this.adminRepo = adminRepo;
         }
         public IActionResult Index(int id) // passes in prizeID from prize overview page
         {
-            var prize = repo.ViewPrize(id); // retrieves data for the relevant prize
+            var prize = prizeRepo.ViewPrize(id); // retrieves data for the relevant prize
             if (Authentication.StoreID == prize._OrganizationID) // verifies the admin is authorized to view the prize's data
             {
                 prize.StatusDropdown = new List<string>() { "show", "hide" }; // sets up dropdown list for display status
@@ -42,7 +44,7 @@ namespace StudentRewardsStore.Controllers
         {
             if ((Authentication.Type == "admin" || Authentication.Type == "demo admin") && Authentication.StoreID > 0 ) // authenticates that an admin is logged in
             { 
-                var prizes = repo.ListPrizes(Authentication.StoreID); // retrieves data for all the store's prizes
+                var prizes = prizeRepo.ListPrizes(Authentication.StoreID); // retrieves data for all the store's prizes
                 return View(prizes); // the prize overview page
             }
             else
@@ -79,7 +81,9 @@ namespace StudentRewardsStore.Controllers
             {
                 newPrize.ImageWidth = 150; // sets the image size to a 150x150 pixel square
                 newPrize.ImageHeight = 150;
-                repo.AddPrize(newPrize); // writes the prize data to the database
+                prizeRepo.AddPrize(newPrize); // writes the prize data to the database
+                Authentication.LastAction = DateTime.Now;
+                adminRepo.LoginAdmin();
                 return RedirectToAction("Overview"); // prize overview page
             }
             catch (Exception)
@@ -93,7 +97,9 @@ namespace StudentRewardsStore.Controllers
             {
                 prize.ImageWidth = 150; // sets the image size to a 150x150 pixel square
                 prize.ImageHeight = 150;
-                repo.UpdatePrize(prize); // updates the prize data to the database
+                prizeRepo.UpdatePrize(prize); // updates the prize data to the database
+                Authentication.LastAction = DateTime.Now;
+                adminRepo.LoginAdmin();
                 return RedirectToAction("Overview"); // the prize overview page
             }
             catch (Exception)

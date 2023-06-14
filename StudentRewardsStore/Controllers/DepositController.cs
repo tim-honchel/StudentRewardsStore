@@ -7,16 +7,18 @@ namespace StudentRewardsStore.Controllers
 {
     public class DepositController : Controller
     {
-        private readonly IDepositsRepository repo;
+        private readonly IDepositsRepository depositRepo;
         private readonly IStudentsRepository studentRepo;
-        public DepositController(IDepositsRepository repo, IStudentsRepository studentRepo)
+        private readonly IAdminsRepository adminRepo;
+        public DepositController(IDepositsRepository depositRepo, IStudentsRepository studentRepo, IAdminsRepository adminRepo)
         {
-            this.repo = repo; // deposit data repository
+            this.depositRepo = depositRepo; // deposit data repository
             this.studentRepo = studentRepo; // student data repository
+            this.adminRepo = adminRepo;
         }
         public IActionResult Index(int id)
         {
-            var deposit = repo.ViewDeposit(id); // retrieves the relevant deposit
+            var deposit = depositRepo.ViewDeposit(id); // retrieves the relevant deposit
             if (Authentication.StoreID == deposit._Organization_ID) // verifies the user is authorized to access this page
             {
                 deposit.AmountDropdown = new List<int>(); // sets up a dropdown list for the deposit amount
@@ -40,7 +42,7 @@ namespace StudentRewardsStore.Controllers
         {
             if ((Authentication.Type == "admin" || Authentication.Type == "demo admin") && Authentication.StoreID > 0) // authenticates a user is logged in
             {
-                var deposits = repo.ShowAllDeposits(Authentication.StoreID); // retrieves all the store's deposits
+                var deposits = depositRepo.ShowAllDeposits(Authentication.StoreID); // retrieves all the store's deposits
                 return View(deposits); // the deposits overview page
             }
             else
@@ -52,7 +54,9 @@ namespace StudentRewardsStore.Controllers
         {
             try
             {
-                repo.UpdateDeposit(deposit); // writes the updated values to the database
+                depositRepo.UpdateDeposit(deposit); // writes the updated values to the database
+                Authentication.LastAction = DateTime.Now;
+                adminRepo.LoginAdmin();
                 return RedirectToAction("Overview"); // the deposits overview page
             }
             catch (Exception)
@@ -90,7 +94,9 @@ namespace StudentRewardsStore.Controllers
             {
                 try
                 {
-                    repo.AddDeposit(newDeposit);
+                    depositRepo.AddDeposit(newDeposit);
+                    Authentication.LastAction = DateTime.Now;
+                    adminRepo.LoginAdmin();
                     return RedirectToAction("Overview");
                 }
                 catch (Exception)

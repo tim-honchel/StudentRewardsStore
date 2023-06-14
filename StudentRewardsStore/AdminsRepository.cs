@@ -61,5 +61,17 @@ namespace StudentRewardsStore
         {
             return _conn.QuerySingle<Admin>("SELECT * FROM admins WHERE Email = @Email;", new { Email = email});
         }
+        public void LoginAdmin()
+        {
+            //_conn.Execute("Update admins SET LoggedIn = 'yes', LastAction = @LastAction WHERE AdminID = @AdminID;", new { AdminID = Authentication.AdminID, LastAction = Authentication.LastAction });
+        }
+        public void LogoutAdmin()
+        {
+            //_conn.Execute("Update admins SET LoggedIn = 'no' WHERE AdminID = @AdminID;", new { AdminID = Authentication.AdminID });
+        }
+        public void UpdateLastAction()
+        {
+            _conn.Execute("Update admins SET LastAction = @LastAction WHERE AdminID = @AdminID;", new { AdminID = Authentication.AdminID, LastAction = Authentication.LastAction });
+        }
     }
 }

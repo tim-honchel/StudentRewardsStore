@@ -16,13 +16,13 @@
     padding-left:2%;
 }
 .column-a {
-    float: left;
+/*    float: left;*/
     width: 49.5%;
     padding-right: 2%;
 }
 
 .column-b {
-    float: left;
+/*    float: left;*/
     width: 49.5%;
     text-align: center;
     padding-left: 2%;

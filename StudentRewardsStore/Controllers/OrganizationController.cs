@@ -11,10 +11,12 @@ namespace StudentRewardsStore.Controllers
 
         private readonly IOrganizationsRepository orgRepo;
         private readonly IPrizesRepository prizeRepo;
-        public OrganizationController(IOrganizationsRepository orgRepo, IPrizesRepository prizeRepo)
+        private readonly IAdminsRepository adminRepo;
+        public OrganizationController(IOrganizationsRepository orgRepo, IPrizesRepository prizeRepo, IAdminsRepository adminRepo)
         {
             this.orgRepo = orgRepo;
             this.prizeRepo = prizeRepo;
+            this.adminRepo = adminRepo;
         }
 
         public IActionResult Index(int id) // receives store ID
@@ -66,6 +68,8 @@ namespace StudentRewardsStore.Controllers
                 newStore.StoreStatus = "closed"; // default value
                 orgRepo.SaveNewStore(newStore); // adds the new store to the database
                 var refreshedStore = orgRepo.RefreshStore(newStore); // retrieves the store with its auto-generated store ID
+                Authentication.LastAction = DateTime.Now;
+                adminRepo.LoginAdmin();
                 return RedirectToAction("Overview", new { id = refreshedStore.OrganizationID }); // redirects to the Store Overview page
             }
             catch (Exception)
@@ -91,6 +95,8 @@ namespace StudentRewardsStore.Controllers
         {
             try {
                 orgRepo.UpdateStore(store);
+                Authentication.LastAction = DateTime.Now;
+                adminRepo.LoginAdmin();
                 return RedirectToAction("Overview", new { id = store.OrganizationID });
             } 
             catch (Exception)
@@ -105,6 +111,7 @@ namespace StudentRewardsStore.Controllers
             Authentication.AdminID = 1;
             Authentication.StoreID = 1;
             var demoStore = new Organization();
+            demoStore = orgRepo.OpenStore(1);
             demoStore.OrganizationID = 1;
             demoStore.Name = "Demo Store";
             demoStore.CurrencyName = "Demo Dollars";
@@ -112,6 +119,17 @@ namespace StudentRewardsStore.Controllers
             demoStore._AdminID = 1;
             orgRepo.LoadDemoStore(demoStore);
             prizeRepo.LoadDemoPrizes();
+            var demoAdmin = adminRepo.GetAdminID("testing@gmail.com");
+            Authentication.LastAction = DateTime.Now;
+            if (demoAdmin.LoggedIn == "yes" && demoAdmin.LastAction != null && Authentication.LastAction.Subtract(demoAdmin.LastAction).Minutes < 30)
+            {
+                Authentication.MultipleUsers = true;
+            }
+            else
+            {
+                Authentication.MultipleUsers = false;
+            }
+            adminRepo.LoginAdmin();
             return RedirectToAction("Overview", 1);
         }
     }

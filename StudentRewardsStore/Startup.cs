@@ -27,8 +27,8 @@ namespace StudentRewardsStore
             services.AddScoped<IDbConnection>((s) =>
             {
 
-                    IDbConnection conn = new MySqlConnection(Configuration.GetConnectionString("azure")); // to access Azure database server
-                    //IDbConnection conn = new MySqlConnection(Configuration.GetConnectionString("localhost")); // to access local database server
+                    //IDbConnection conn = new MySqlConnection(Configuration.GetConnectionString("azure")); // to access Azure database server
+                    IDbConnection conn = new MySqlConnection(Configuration.GetConnectionString("localhost")); // to access local database server
                     conn.Open();
                     return conn;
 

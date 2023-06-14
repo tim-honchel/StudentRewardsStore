@@ -7,14 +7,16 @@ namespace StudentRewardsStore.Controllers
 {
     public class OrderController : Controller
     {
-        private readonly IOrdersRepository repo;
-        public OrderController(IOrdersRepository repo)
+        private readonly IOrdersRepository orderRepo;
+        private readonly IAdminsRepository adminRepo;
+        public OrderController(IOrdersRepository orderRepo, IAdminsRepository adminRepo)
         {
-            this.repo = repo;
+            this.orderRepo = orderRepo;
+            this.adminRepo = adminRepo;
         }
         public IActionResult Index(int id)
         {
-            var order = repo.ViewOrder(id); // retrieves the relevant order
+            var order = orderRepo.ViewOrder(id); // retrieves the relevant order
             if (Authentication.StoreID == order._Organization_ID_)
             {
                 order.StatusDropdown = new List<string>() { "unfulfilled", "fulfilled", "canceled" };
@@ -42,7 +44,7 @@ namespace StudentRewardsStore.Controllers
         {
             if ((Authentication.Type == "admin" || Authentication.Type == "demo admin") && Authentication.StoreID > 0)
             {
-                var orders = repo.ShowAllOrders(Authentication.StoreID); // retrieves all the store's orders
+                var orders = orderRepo.ShowAllOrders(Authentication.StoreID); // retrieves all the store's orders
                 return View(orders); // the orders overview page
             }
             else
@@ -54,7 +56,9 @@ namespace StudentRewardsStore.Controllers
         {
             try
             {
-                repo.UpdateOrder(order);
+                orderRepo.UpdateOrder(order);
+                Authentication.LastAction = DateTime.Now;
+                adminRepo.LoginAdmin();
                 return RedirectToAction("Overview");
             }
             catch (System.Exception)

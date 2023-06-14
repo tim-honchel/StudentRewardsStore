@@ -1,4 +1,6 @@
-﻿namespace StudentRewardsStore.Models
+﻿using System;
+
+namespace StudentRewardsStore.Models
 {
     public class Admin // the admin table in the database, with all of its columns as properties
     {
@@ -7,5 +9,7 @@
         public string Unhashed { get; set; }
         public string Salt { get; set; }
         public string Password { get; set; }
+        public string LoggedIn { get; set; }
+        public DateTime LastAction { get; set; }
     }
 }

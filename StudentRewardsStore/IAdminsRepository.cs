@@ -10,6 +10,9 @@ namespace StudentRewardsStore
         public Admin CheckPassword(string email, string unhashed);
         public Admin GetAdminID(string email);
         public string encryption(string salt, string unhashed);
+        public void LoginAdmin();
+        public void LogoutAdmin();
+        public void UpdateLastAction();
 
     }
 }

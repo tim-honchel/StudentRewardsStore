@@ -42,6 +42,19 @@ namespace StudentRewardsStore.Controllers
                     Authentication.AdminID = admin.AdminID;
                     Authentication.StoreID = -1; // no store has been selected yet
 
+                    Authentication.LastAction = DateTime.Now;
+
+                    if (admin.LoggedIn == "yes" && admin.LastAction != null && Authentication.LastAction.Subtract(admin.LastAction).Minutes < 30)
+                    {
+                    Authentication.MultipleUsers = true;
+                    }
+                    else
+                    {
+                        Authentication.MultipleUsers = false;
+                    }
+
+                    repo.LoginAdmin();
+
                     return View(stores); // the admin overview page
                 }
                 catch (Exception)

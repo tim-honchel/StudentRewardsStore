@@ -12,13 +12,15 @@ namespace StudentRewardsStore.Controllers
         private readonly IOrganizationsRepository orgRepo;
         private readonly IPrizesRepository prizeRepo;
         private readonly IOrdersRepository ordersRepo;
+        private readonly IAdminsRepository adminRepo;
 
-        public UserController(IStudentsRepository studentRepo, IOrganizationsRepository orgRepo, IPrizesRepository prizeRepo, IOrdersRepository orderRepo)
+        public UserController(IStudentsRepository studentRepo, IOrganizationsRepository orgRepo, IPrizesRepository prizeRepo, IOrdersRepository orderRepo, IAdminsRepository adminRepo)
         {
             this.studentRepo = studentRepo;
             this.orgRepo = orgRepo;
             this.prizeRepo = prizeRepo;
             this.ordersRepo = orderRepo;
+            this.adminRepo = adminRepo;
         }
         public IActionResult Index()
         {
@@ -166,6 +168,11 @@ namespace StudentRewardsStore.Controllers
         }
         public IActionResult Logout()
         {
+            if (Authentication.Type == "admin" || Authentication.Type == "demo admin")
+            {
+                adminRepo.LogoutAdmin();
+            }
+            
             Authentication.Type = "";
             Authentication.StudentID = -1;
             Authentication.AdminID = -1;

@@ -2,7 +2,10 @@
 <div class="secondary-page">
     <h2>Login Successful</h2>
     <p>Select your store:</p>
-
+        @if (Authentication.MultipleUsers == true)
+        {
+            <p style = "color:darkred">This account is signed in on multiple devices or windows, which may cause unexpected effects.</p>
+        }
     <table class="table">
         <tr>
             <th>Store Name</th>
@@ -14,6 +17,7 @@
                 <td><a href="/Organization/Index/@organization.OrganizationID">@organization.Name</a></td> 
             </tr>
         }
+
 
     </table>
 

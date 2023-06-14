@@ -7,15 +7,17 @@ namespace StudentRewardsStore.Controllers
 {
     public class StudentController : Controller
     {
-        private readonly IStudentsRepository repo;
+        private readonly IStudentsRepository studentRepo;
+        private readonly IAdminsRepository adminRepo;
 
-        public StudentController(IStudentsRepository repo)
+        public StudentController(IStudentsRepository studentRepo, IAdminsRepository adminRepo)
         {
-            this.repo = repo; // data repository for the student table
+            this.studentRepo = studentRepo; // data repository for the student table
+            this.adminRepo = adminRepo;
         }
         public IActionResult Index(int id) // passes in studentID from the student overview page
         {
-            var student = repo.ViewStudent(id); // retrieves the relevant student's data
+            var student = studentRepo.ViewStudent(id); // retrieves the relevant student's data
             if (Authentication.StoreID == student._OrganizationID) // verifies that the admin is authorized to view this student's information
             {
                 student.StatusDropdown = new List<string>() { "active", "inactive" }; // sets up a dropdown list for the student's status
@@ -32,7 +34,7 @@ namespace StudentRewardsStore.Controllers
         {
             if ((Authentication.Type == "admin" || Authentication.Type == "demo admin") && Authentication.StoreID > 0) // authenticates that an admin is signed in
             {
-                var students = repo.ListStudents(Authentication.StoreID); // retrieves the data of all students associated with the store
+                var students = studentRepo.ListStudents(Authentication.StoreID); // retrieves the data of all students associated with the store
                 return View(students); // student overview page
             }
             else
@@ -46,6 +48,8 @@ namespace StudentRewardsStore.Controllers
             {
                 var student = new Student();
                 student.StatusDropdown = new List<string>() { "active", "inactive" }; // sets up a dropdown list for the student's status
+                Authentication.LastAction = DateTime.Now;
+                adminRepo.LoginAdmin();
                 return View(student); // add student page
             }
             else
@@ -57,7 +61,9 @@ namespace StudentRewardsStore.Controllers
         {
             try
             {
-                repo.AddStudent(newStudent); // writes the new student into the database
+                studentRepo.AddStudent(newStudent); // writes the new student into the database
+                Authentication.LastAction = DateTime.Now;
+                adminRepo.LoginAdmin();
                 return RedirectToAction("Overview"); // student overview page
             }
             catch (Exception)
@@ -69,7 +75,9 @@ namespace StudentRewardsStore.Controllers
         {
             try
             {
-                repo.UpdateStudent(student); // updates the student in the database
+                studentRepo.UpdateStudent(student); // updates the student in the database
+                Authentication.LastAction = DateTime.Now;
+                adminRepo.LoginAdmin();
                 return RedirectToAction("Overview"); // student overview page
             }
             catch (Exception)
